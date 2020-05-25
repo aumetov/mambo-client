@@ -4,7 +4,7 @@ import {getProductsResponse} from '../actions/actions';
 import { actionTypes } from '../consts/actions';
 import Endpoints from '../consts/endpoints';
 
-function* getFetchSearch(action:ActionTypeWithStringPayload){
+function* fetchProducts(action:ActionTypeWithStringPayload){
     try {
         const response = yield call(async () => await fetch(`${Endpoints.Product.getAll}?q=${action.payload}`));
         const parsed = yield call(async () => await response.json());
@@ -19,7 +19,7 @@ function* getFetchSearch(action:ActionTypeWithStringPayload){
 }
 
 function* responseFetchSearch(){
-    yield takeLatest(actionTypes.FETCH_PRODUCTS, getFetchSearch)
+    yield takeLatest(actionTypes.FETCH_PRODUCTS, fetchProducts)
 }
 
 export default function* rootSaga(){
