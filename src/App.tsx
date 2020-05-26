@@ -10,15 +10,17 @@ export const App: React.FC<{}> = () => {
   return (
       <div className="App">
         <Header/>
-        <ProductCard/>
-        <SidebarFilter/>
-        <Router>
-            {/* <Switch>
-              <Route path='/' exact={true} component={<div/>}/>
-              <Route path='/product' exact={true} component={<div/>}/>
-              <Route path='/shop' exact={true} component={<div/>}/>
-            </Switch> */}
-        </Router>
+        <div className='main-wrapper'>
+          <ProductCard/>
+          <SidebarFilter/>
+          <Router>
+              {/* <Switch>
+                <Route path='/' exact={true} component={<div/>}/>
+                <Route path='/product' exact={true} component={<div/>}/>
+                <Route path='/shop' exact={true} component={<div/>}/>
+              </Switch> */}
+          </Router>
+        </div>
       </div>
   );
 }
