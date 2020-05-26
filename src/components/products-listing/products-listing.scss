@@ -1,0 +1,15 @@
+.products-listing-container {
+    display: flex;
+    justify-content: space-between;
+    .products-list {
+        display: flex;
+        width: 1065px;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        padding-left: 25px;
+        
+        .product-card-container {
+            margin-bottom: 30px;
+        }
+    }
+}
