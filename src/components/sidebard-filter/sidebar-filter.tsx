@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import './sidebar-filter.scss'
+import 'react-input-range/lib/css/index.css'
+import InputRange from 'react-input-range';
 
 export default class SidebarFilter extends Component {
     render() {
@@ -54,6 +56,14 @@ export default class SidebarFilter extends Component {
 
                     <div className='price-filter'>
                         <p className='filter-title'>Цена</p>
+                        <InputRange
+                            maxValue={100}
+                            minValue={0}
+                            formatLabel={value => `${value} с`}
+                            value={{min:0, max:20}}
+                            onChange={value => console.log(value)}
+                            onChangeComplete={value => console.log(value)}
+                        />
                     </div>
                 </div>
             </div>
