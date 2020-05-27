@@ -16,6 +16,7 @@
             width: 31px;
             height: 31px;
             margin: 0px 21px;
+            cursor: pointer;
         }
 
         h2 {
@@ -35,10 +36,12 @@
             color: white;
             border: none;
             outline: none;
+            cursor: pointer;
         }
 
         .shopping-cart-icon {
             margin: 0 30px;
+            cursor: pointer;
         }
     }
 }

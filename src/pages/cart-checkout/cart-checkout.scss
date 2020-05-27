@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.cart-checkout-container {
+    display: flex;
+    justify-content: space-between;
+
+    .cart-products-info-list {
+        width: 866px;
+
+        .cart-checkout-title {
+            font-family: 'Roboto', sans-serif;
+            font-size: 48px;
+            font-weight: bold;
+            text-align: left;
+        }
+    
+        .price-info-container {
+            width: 356px;
+            margin-left: auto;
+
+            .subtotal-price-container {
+                display: flex;
+                justify-content: space-between;
+                width: 280px;
+                margin-left: auto;
+    
+                .subtotal-title {
+                    font-family: 'Roboto', sans-serif;
+                    font-size: 21px;
+                    font-weight: bold;
+                    color: #aaaaaa;
+                    margin-bottom: 0px;
+                }
+    
+                .subtotal-price {
+                    font-family: 'Roboto', sans-serif;
+                    font-weight: bold;
+                    font-size: 21px;
+                    color: #585858;
+                    margin-bottom: 0px;
+                }
+            }
+    
+            .shipping-price-container {
+                display: flex;
+                justify-content: space-between;
+                width: 280px;
+                margin-left: auto;
+    
+                .shipping-title {
+                    font-family: 'Roboto', sans-serif;
+                    font-size: 21px;
+                    font-weight: bold;
+                    color: #aaaaaa;
+                    margin: 15px 0;
+                }
+    
+                .shipping-price {
+                    font-family: 'Roboto', sans-serif;
+                    font-weight: bold;
+                    font-size: 21px;
+                    color: #585858;
+                    margin: 15px 0;
+                }
+            }
+
+            .total-price-container {
+                display: flex;
+                justify-content: space-between;
+                width: 280px;
+                margin-left: auto;
+                border-top: 1px solid #aaaaaa;
+
+                .total-title {
+                    font-family: 'Roboto', sans-serif;
+                    font-size: 28px;
+                    font-weight: bold;
+                    color: #171717;
+                    margin: 20px 0;
+                }
+    
+                .total-price {
+                    font-family: 'Roboto', sans-serif;
+                    font-weight: bold;
+                    font-size: 28px;
+                    color: #3c3c3c;
+                    margin: 20px 0;
+                }
+            }
+    
+        }
+    }
+
+    .payment-info-container {
+        width: 394px;
+        height: 833px;
+        background: #aaaaaa;
+    }
+}
