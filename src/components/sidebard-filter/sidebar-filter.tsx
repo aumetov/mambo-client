@@ -11,6 +11,12 @@ export default class SidebarFilter extends Component {
                     <div className='categories-filter'>
                         <p className='filter-title'>Категории</p>
                         <p className='category'>Футболки</p>
+                        <p className='category'>Брюки</p>
+                        <p className='category'>Рубашки</p>
+                        <p className='category'>Платья</p>
+                        <p className='category'>Свитера</p>
+                        <p className='category'>Толстовки</p>
+                        <p className='category'>Куртки</p>
                     </div>
 
                     <div className='sex-filter'>

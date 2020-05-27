@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+
+.product-details-container {
+    display: flex;
+    justify-content: space-between;
+    text-align: left;
+
+    .product-info {
+        display: flex;
+        flex-direction: column;
+        width: 599px;
+        height: 100%;
+
+        .product-info-title {
+            font-size: 48px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: bold;
+            margin: 0 0 15px 0;
+        }
+
+        .product-info-shop {
+            font-size: 28px;
+            font-family: 'Roboto', sans-serif;
+            color: #aaaaaa;
+            margin: 0 0 25px 0;
+        }
+
+        .selection-title {
+            font-size: 21px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: bold;
+            margin: 0 0 15px 0;
+        }
+    
+        .size-selection {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+    
+            .sizes-container {
+                display: flex;
+    
+                .size-option {
+                    width: 51px;
+                    height: 33px;
+                    background: #c4c4c4;
+                    margin-right: 15px;
+                }
+    
+                :last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+    
+        .color-selection {
+            display: flex;
+            flex-direction: column;
+    
+            .colors-container {
+                display: flex;
+    
+                .color-option {
+                    width: 33px;
+                    height: 33px;
+                    background: #c4c4c4;
+                    border-radius: 5px;
+                    margin-right: 15px;
+                }
+    
+                :last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+
+        .product-old-price {
+            font-size: 36px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: medium;
+            text-decoration: line-through;
+            color: #aaaaaa;
+            margin-bottom: 0px;
+        }
+
+        .product-price {
+            font-size: 36px;
+            font-family: 'Roboto', sans-serif;
+            font-weight: medium;
+            margin: 5px 0 0 0;
+        }
+
+        .product-action-buttons {
+            display: flex;
+            margin-top: 28px;
+            
+            .add-to-cart-button {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                width: 241px;
+                height: 44px;
+                margin-right: 10px;
+                border: none;
+                font-size: 18px;
+                font-family: 'Roboto', sans-serif;
+                background: #171717;
+                color: white;
+                outline: none;
+            }
+
+            .add-to-wishlist-button {
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                width: 222px;
+                height: 44px;
+                border: none;
+                font-size: 18px;
+                font-family: 'Roboto', sans-serif;
+                background: #aaaaaa;
+                color: white;
+                outline: none;
+
+                .add-to-wishlist-icon {
+                    width: 28px;
+                    height: 28px;
+                }
+            }
+        }
+
+        .description-title {
+            margin: 30px 0 20px 0;
+            padding-bottom: 12px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 21px;
+            font-weight: medium;
+            color: #aaaaaa;
+            border-bottom: 2px solid black;
+        }
+    }
+}
