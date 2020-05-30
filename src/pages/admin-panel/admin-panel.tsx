@@ -3,6 +3,7 @@ import './admin-panel.scss'
 import AdminSidebarNavigation from '../../components/admin-sidebar-navigation/admin-sidebar-navigation'
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import AdminProducts from '../../components/admin-products/admin-products';
+import AddProduct from '../../components/add-product/add-product';
 
 export default class AdminPanel extends Component {
     render() {
@@ -10,14 +11,12 @@ export default class AdminPanel extends Component {
             <div className='admin-panel-container'>
                 <AdminSidebarNavigation/>
                 <div className='admin-panel-content'>
-                    <AdminProducts/>
-                    {/* <Router>
+                    <Router>
                         <Switch>
-                            <Route path='/' exact={true} component={<div/>}/>
-                            <Route path='/product' exact={true} component={<div/>}/>
-                            <Route path='/shop' exact={true} component={<div/>}/>
+                            <Route path='/shop-admin' exact component={AdminProducts}/>
+                            <Route path='/shop-admin/add-product/' component={AddProduct}/>
                         </Switch>
-                    </Router> */}
+                    </Router>
                 </div>
             </div>
         )

@@ -1,0 +1,88 @@
+.add-product-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .main-product-info {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 130px;
+
+        .main-product-info-textfields {
+            display: flex;
+            flex-direction: column;
+
+            .product-info-input {
+                width: 356px;
+                margin-bottom: 10px;
+            }
+        }
+
+        .product-photos-upload {
+            width: 356px;
+            height: 343px;
+            background: #F0F0F0;
+        }
+    }
+    
+    .product-description-input {
+        margin: 0 130px 10px 130px;
+        height: 50px;
+    }
+
+    .product-options {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 130px;
+    }
+
+    .product-action-buttons {
+        display: flex;
+        justify-content: flex-end;
+        margin: 10px 130px;
+
+        .add-product-button {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 180px;
+            height: 40px;
+            padding: 0 15px;
+            margin-left: 10px;
+            border: none;
+            font-size: 14px;
+            font-family: 'Roboto', sans-serif;
+            background: #171717;
+            color: white;
+            outline: none;
+            cursor: pointer;
+
+            .add-product-icon {
+                width: 25px;
+                height: 25px;
+                margin-right: 10px;
+            }
+        }
+
+        .delete-product-button {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 130px;
+            height: 40px;
+            padding: 0 15px;
+            border: none;
+            font-size: 14px;
+            font-family: 'Roboto', sans-serif;
+            background: #FF3535;
+            color: white;
+            outline: none;
+            cursor: pointer;
+
+            .delete-product-icon {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+}

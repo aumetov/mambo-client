@@ -8,6 +8,11 @@
         justify-content: space-between;
         padding-left: 25px;
         
+        a {
+            outline: none;
+            text-decoration: none !important;
+        }
+
         .product-card-container {
             margin-bottom: 30px;
         }
