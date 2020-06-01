@@ -9,7 +9,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 
 const addNewProductIcon = require('../../shared/icons/add.png')
-const deleteIcon = require('../../shared/icons/delete.png')
 
 interface IProps {
 }
@@ -122,11 +121,6 @@ export default class AddProduct extends Component<IProps, IState> {
                     </FormControl>
                 </div>
                 <div className="product-action-buttons">
-                    {/* <button className='delete-product-button'>
-                        <img className='delete-product-icon' alt='delete product' src={deleteIcon}/>
-                        Удалить
-                    </button> */}
-
                     <button className='add-product-button'>
                         <img className='add-product-icon' alt='add product' src={addNewProductIcon}/>
                         Добавить товар
