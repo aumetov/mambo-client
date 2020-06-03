@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import './add-product.scss'
 import { connect, ConnectedProps } from "react-redux";
 import TextField from '@material-ui/core/TextField';
@@ -32,6 +32,8 @@ const AddProduct:React.FC<Props> = ({loading, createProduct}:Props) => {
     const statusInputRef = React.createRef<HTMLInputElement>();
     const descriptionInputRef = React.createRef<HTMLInputElement>();
 
+    const [colors, setColors] = useState<Array<number>>([]);
+    const [sizes, setSizes] = useState<Array<string>>([]);
 
     const onProductAdd = () => {
         console.log(titleInputRef!.current!.value);
@@ -80,13 +82,13 @@ const AddProduct:React.FC<Props> = ({loading, createProduct}:Props) => {
                         id="size-selector"
                         label="Размер"
                         multiple
-                        value={[1,2,3]}
                         renderValue={(selected: any) => selected.join(', ')}
-                        onChange={()=>{}}
+                        value={colors}
+                        onChange={(e: React.ChangeEvent<{name?: string | undefined, value: any}>) => setColors(e.target.value)}
                     >
                         {[1,2,3,4].map((name) => (
                             <MenuItem key={name} value={name}>
-                            <Checkbox checked={[1,2,3].includes(name)}/>
+                            <Checkbox checked={colors.includes(name)}/>
                             <ListItemText primary={name} />
                             </MenuItem>
                         ))}
@@ -100,13 +102,13 @@ const AddProduct:React.FC<Props> = ({loading, createProduct}:Props) => {
                         id="color-selector"
                         label="Цвет"
                         multiple
-                        value={[1,2,3]}
                         renderValue={(selected: any) => selected.join(', ')}
-                        onChange={()=>{}}
+                        value={sizes}
+                        onChange={(e: React.ChangeEvent<{name?: string | undefined, value: any}>) => setSizes(e.target.value)}
                     >
-                        {[1,2,3,4].map((name) => (
+                        {['1', '2', '3'].map((name) => (
                             <MenuItem key={name} value={name}>
-                            <Checkbox checked={[1,2,3].includes(name)}/>
+                            <Checkbox checked={sizes.includes(name)}/>
                             <ListItemText primary={name} />
                             </MenuItem>
                         ))}
