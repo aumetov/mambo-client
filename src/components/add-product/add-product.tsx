@@ -25,37 +25,53 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & RootDispatch;
 
 const AddProduct:React.FC<Props> = ({loading, createProduct}:Props) => {
-    const titleInputRef = React.createRef<HTMLInputElement>();
-    const categoryInputRef = React.createRef<HTMLInputElement>();
-    const priceInputRef = React.createRef<HTMLInputElement>();
-    const salePriceInputRef = React.createRef<HTMLInputElement>();
-    const collectionInputRef = React.createRef<HTMLInputElement>();
-    const statusInputRef = React.createRef<HTMLInputElement>();
-    const descriptionInputRef = React.createRef<HTMLInputElement>();
-
+    const [title, setTitle] = useState<string>('')
+    const [categories, setCategories] = useState<Array<number>>([1,2])
+    const [price, setPrice] = useState<number>(0)
+    const [salePrice, setSalePrice] = useState<number>(0) 
+    const [collection, setCollection] = useState<string>('')
+    const [status, setStatus] = useState<string>('')
+    const [description, setDescription] = useState<string>('')
     const [colors, setColors] = useState<Array<number>>([]);
     const [sizes, setSizes] = useState<Array<string>>([]);
+    const [sex, setSex] = useState<string>('Male')
 
     const onProductAdd = () => {
-        console.log(titleInputRef!.current!.value);
-        console.log(statusInputRef!.current!.value);
+        const data: CreateProductDto = {
+            title,
+            categories,
+            price,
+            salePrice,
+            collection,
+            status,
+            description,
+            colors,
+            sizes,
+            productImages: ['1'],
+            sex,
+            shopId: 'testShopId',
+            productThumbnail: '1'
+        };
+
+        createProduct(data)
     }
 
     return (
         <div className='add-product-container'>
             <div className='main-product-info'>
                 <div className='main-product-info-textfields'>
-                    <TextField label="Название" inputRef={titleInputRef} className='product-info-input'/>
-                    <TextField label="Категория" inputRef={categoryInputRef} className='product-info-input'/>
-                    <TextField label="Цена" inputRef={priceInputRef} type='number' className='product-info-input'/>
-                    <TextField label="Цена распродажи" inputRef={salePriceInputRef} type='number' className='product-info-input'/>
-                    <TextField label="Коллекция" inputRef={collectionInputRef} className='product-info-input'/>
+                    <TextField label="Название" value={title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)} className='product-info-input'/>
+                    <TextField label="Категория" value={categories} className='product-info-input'/>
+                    <TextField label="Цена" value={price} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrice(parseInt(e.target.value))} type='number' className='product-info-input'/>
+                    <TextField label="Цена распродажи" value={salePrice} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSalePrice(parseInt(e.target.value))} type='number' className='product-info-input'/>
+                    <TextField label="Коллекция" value={collection} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCollection(e.target.value)} className='product-info-input'/>
                     <FormControl>
                         <InputLabel id="status-select-label">Статус</InputLabel>
                         <Select
                             labelId="status-select-label"
                             id="status-select"
-                            inputRef={statusInputRef}
+                            value={status}
+                            onChange={(e: React.ChangeEvent<{name?: string | undefined, value: any}>) => setStatus(e.target.value)}
                         >
                             <MenuItem value={'in-stock'}>В наличии</MenuItem>
                             <MenuItem value={'out-of-stock'}>Нет в наличии</MenuItem>
@@ -72,7 +88,8 @@ const AddProduct:React.FC<Props> = ({loading, createProduct}:Props) => {
                 multiline rows={4}
                 className='product-description-input'
                 inputProps={{maxLength: 340}}
-                inputRef={descriptionInputRef}
+                value={description}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
             />
             <div className='product-options'>
                 <FormControl style={{width: 356}}>

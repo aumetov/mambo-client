@@ -1,6 +1,6 @@
 export interface CreateProductDto {
     title: string;
-    category: string;
+    categories: number[];
     status: string;
     price: number;
     salePrice: number;
@@ -9,4 +9,7 @@ export interface CreateProductDto {
     description: string;
     collection: string;
     productImages: string[];
+    sex: string;
+    shopId: string;
+    productThumbnail: string;
 }
