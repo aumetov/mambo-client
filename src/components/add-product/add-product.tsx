@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { createProductRequest } from '../../actions/actions';
+import { CreateProductDto } from '../../types/types';
 
 const addNewProductIcon = require('../../shared/icons/add.png')
 
@@ -17,7 +18,7 @@ interface RootState{
 }
 
 interface RootDispatch{
-    createProduct: (query: string) => void;
+    createProduct: (product: CreateProductDto) => void;
 }
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
@@ -38,7 +39,6 @@ const AddProduct:React.FC<Props> = ({loading, createProduct}:Props) => {
     const onProductAdd = () => {
         console.log(titleInputRef!.current!.value);
         console.log(statusInputRef!.current!.value);
-        return createProduct('');
     }
 
     return (

@@ -1,6 +1,6 @@
 import {StoreTypes} from '../types/store';
 import {actionTypes} from '../consts/actions';
-import { ActionTypeWithArray, ActionTypeWithStringPayload } from '../types/actions';
+import { ActionTypeWithArray, ActionTypeWithStringPayload, ActionTypeWithProductDto } from '../types/actions';
 
 const initialStore:StoreTypes = {
     result: null,
@@ -8,9 +8,9 @@ const initialStore:StoreTypes = {
 };
 
 const fetchToServer = (
-    state:StoreTypes = initialStore,
-    action: ActionTypeWithArray | ActionTypeWithStringPayload
-    ):StoreTypes => {
+    state: StoreTypes = initialStore,
+    action: ActionTypeWithArray | ActionTypeWithStringPayload | ActionTypeWithProductDto
+    ): StoreTypes => {
     switch(action.type){
         case actionTypes.FETCH_PRODUCTS:
             return{
@@ -22,7 +22,12 @@ const fetchToServer = (
                 ...state,
                 result: action.payload,
                 loading: false
-            };         
+            };     
+        case actionTypes.CREATE_PRODUCT:
+            return{
+                ...state,
+                loading: true
+            };  
         default:
             return state;
     }
