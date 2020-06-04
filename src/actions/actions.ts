@@ -6,3 +6,5 @@ export const getProductsRequest = (query:string) => ({type: actionTypes.FETCH_PR
 export const getProductsResponse = (data:Array<any>) => ({type: actionTypes.RECIEVED_PRODUCTS, payload: data})
 
 export const createProductRequest = (product: CreateProductDto) => ({type: actionTypes.CREATE_PRODUCT, payload: product})
+
+export const createProductSuccess = (product: CreateProductDto[]) => ({type: actionTypes.CREATE_PRODUCT_SUCCESS, payload: product})

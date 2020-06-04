@@ -27,7 +27,13 @@ const fetchToServer = (
             return{
                 ...state,
                 loading: true
-            };  
+            };
+        case actionTypes.CREATE_PRODUCT_SUCCESS:
+            return{
+                ...state,
+                result: action.payload,
+                loading: false
+            };
         default:
             return state;
     }

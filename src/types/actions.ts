@@ -12,6 +12,6 @@ export interface ActionTypeWithArray{
 }
 
 export interface ActionTypeWithProductDto{
-    type: typeof actionTypes.CREATE_PRODUCT;
+    type: actionTypes;
     payload: CreateProductDto;
 }

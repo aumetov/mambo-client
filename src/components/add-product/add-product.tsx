@@ -10,6 +10,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { createProductRequest } from '../../actions/actions';
 import { CreateProductDto } from '../../types/types';
+import { Sexes } from '../../consts/sex-enums';
+import ImageUploader from "react-images-upload";
 
 const addNewProductIcon = require('../../shared/icons/add.png')
 
@@ -28,13 +30,14 @@ const AddProduct:React.FC<Props> = ({loading, createProduct}:Props) => {
     const [title, setTitle] = useState<string>('')
     const [categories, setCategories] = useState<Array<number>>([1,2])
     const [price, setPrice] = useState<number>(0)
-    const [salePrice, setSalePrice] = useState<number>(0) 
+    const [salePrice, setSalePrice] = useState<number>(0)
+    const [productImages, setProductImages] = useState<Array<File>>([]) 
     const [collection, setCollection] = useState<string>('')
     const [status, setStatus] = useState<string>('')
     const [description, setDescription] = useState<string>('')
     const [colors, setColors] = useState<Array<number>>([]);
     const [sizes, setSizes] = useState<Array<string>>([]);
-    const [sex, setSex] = useState<string>('Male')
+    const [sex, setSex] = useState<Sexes>(Sexes.Female)
 
     const onProductAdd = () => {
         const data: CreateProductDto = {
@@ -52,8 +55,12 @@ const AddProduct:React.FC<Props> = ({loading, createProduct}:Props) => {
             shopId: 'testShopId',
             productThumbnail: '1'
         };
-
+        console.log(productImages)
         createProduct(data)
+    }
+
+    const onDrop = (pictureFiles: File[], pictureDataURLs: string[]) => {
+        setProductImages(pictureFiles)
     }
 
     return (
@@ -78,9 +85,31 @@ const AddProduct:React.FC<Props> = ({loading, createProduct}:Props) => {
                             <MenuItem value={'delivery-expected'}>Ожидается поставка</MenuItem>
                         </Select>
                     </FormControl>
+                    <FormControl>
+                        <InputLabel id="sex-select-label">Пол</InputLabel>
+                        <Select
+                            labelId="sex-select-label"
+                            id="sex-select"
+                            value={sex}
+                            onChange={(e: React.ChangeEvent<{name?: string | undefined, value: any}>) => setSex(e.target.value)}
+                        >
+                            <MenuItem value={Sexes.Male}>Мужской</MenuItem>
+                            <MenuItem value={Sexes.Female}>Женский</MenuItem>
+                            <MenuItem value={Sexes.Unisex}>Юнисекс</MenuItem>
+                        </Select>
+                    </FormControl>
                 </div>
                 <div className="product-photos-upload">
-
+                    <ImageUploader
+                        withIcon={false}
+                        withPreview={true}
+                        label=""
+                        buttonText="Добавить фото"
+                        onChange={onDrop}
+                        imgExtension={[".jpg", ".png"]}
+                        maxFileSize={1048576}
+                        fileSizeError=" размер файла слишком большой"
+                    />
                 </div>
             </div>
             <TextField

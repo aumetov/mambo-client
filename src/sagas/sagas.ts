@@ -1,6 +1,6 @@
 import {put,takeLatest,all,call} from 'redux-saga/effects';
 import {ActionTypeWithStringPayload, ActionTypeWithProductDto} from '../types/actions';
-import {getProductsResponse} from '../actions/actions';          
+import {getProductsResponse, createProductSuccess} from '../actions/actions';          
 import { actionTypes } from '../consts/actions';
 import Endpoints from '../consts/endpoints';
 
@@ -29,10 +29,9 @@ function* createProduct(action: ActionTypeWithProductDto){
         }));
         const parsed = yield call(async () => await response.json());
         if (!parsed.message) {
-            console.log(parsed)
-            yield put(getProductsResponse(parsed));
+            yield put(createProductSuccess(parsed));
         } else {
-            yield put(getProductsResponse([]));
+            yield put(createProductSuccess([]));
         }
     } catch(e) {
         console.log(e)
