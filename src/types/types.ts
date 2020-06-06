@@ -4,7 +4,7 @@ import { Colors } from "../consts/colors";
 
 export interface CreateProductDto {
     title: string;
-    categories: number[];
+    categories: any[];
     status: string;
     price: number;
     salePrice: number;

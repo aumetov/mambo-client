@@ -23,7 +23,7 @@ function* createProduct(action: ActionTypeWithProductDto){
         const data = new FormData()
         data.append('productInfo', JSON.stringify({
             title: action.payload.title,
-            categories: action.payload.title,
+            categories: action.payload.categories.map(category => category._id),
             collection: action.payload.collection,
             price: action.payload.price,
             salePrice: action.payload.salePrice,

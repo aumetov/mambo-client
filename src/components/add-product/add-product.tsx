@@ -20,7 +20,7 @@ const addNewProductIcon = require('../../shared/icons/add.png')
 
 interface RootState{
     loading: boolean
-    categories: string[]
+    categories: any[]
 }
 
 interface RootDispatch{
@@ -33,12 +33,12 @@ type Props = PropsFromRedux & RootDispatch;
 
 const AddProduct:React.FC<Props> = ({loading, categories, fetchCategories, createProduct}:Props) => {
     const [title, setTitle] = useState<string>('')
-    const [productCategories, setCategories] = useState<Array<number>>([1,2])
+    const [productCategories, setCategories] = useState<Array<any>>([])
     const [price, setPrice] = useState<number>(0)
     const [salePrice, setSalePrice] = useState<number>(0)
     const [productImages, setProductImages] = useState<Array<File>>([]) 
     const [collection, setCollection] = useState<string>('')
-    const [status, setStatus] = useState<string>('')
+    const [status, setStatus] = useState<ProductStatus>(ProductStatus.IN_STOCK)
     const [description, setDescription] = useState<string>('')
     const [colors, setColors] = useState<Array<Colors>>([]);
     const [sizes, setSizes] = useState<Array<Sizes>>([]);
@@ -77,7 +77,25 @@ const AddProduct:React.FC<Props> = ({loading, categories, fetchCategories, creat
             <div className='main-product-info'>
                 <div className='main-product-info-textfields'>
                     <TextField label="Название" value={title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)} className='product-info-input'/>
-                    <TextField label="Категория" value={productCategories} className='product-info-input'/>
+                    <FormControl style={{width: 356}}>
+                        <InputLabel id="category-selector">Категория</InputLabel>
+                        <Select
+                            labelId="category-selector"
+                            id="category-selector"
+                            label="Категория"
+                            multiple
+                            renderValue={(selected: any) => selected.map(category => category.displayTitle).join(', ')}
+                            value={productCategories}
+                            onChange={(e: React.ChangeEvent<{name?: string | undefined, value: any}>) => setCategories(e.target.value)}
+                        >
+                            {categories.map((category: any) => (
+                                <MenuItem key={category._id} value={category}>
+                                <Checkbox checked={productCategories.includes(category)}/>
+                                <ListItemText primary={category.displayTitle} />
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                     <TextField label="Цена" value={price} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrice(parseInt(e.target.value))} type='number' className='product-info-input'/>
                     <TextField label="Цена распродажи" value={salePrice} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSalePrice(parseInt(e.target.value))} type='number' className='product-info-input'/>
                     <TextField label="Коллекция" value={collection} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCollection(e.target.value)} className='product-info-input'/>

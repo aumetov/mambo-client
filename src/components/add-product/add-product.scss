@@ -21,11 +21,13 @@
         .product-photos-upload {
             width: 430px;
             height: 386px;
-            background: #F0F0F0;
 
             .fileContainer {
+                width: 430px;
+                height: 386px;
                 padding: 0;
                 margin: 0;
+                background: #F0F0F0;
                 
                 .uploadPictureContainer {
                     width: 18% !important;
