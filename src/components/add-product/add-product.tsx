@@ -10,8 +10,11 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { createProductRequest, fetchCategoriesRequest } from '../../actions/actions';
 import { CreateProductDto } from '../../types/types';
-import { Sexes } from '../../consts/sex-enums';
 import ImageUploader from "react-images-upload";
+import { Gender, GenderDisplayNames } from '../../consts/gender';
+import { Colors, ColorsDisplayNames } from '../../consts/colors';
+import { Sizes } from '../../consts/sizes';
+import { ProductStatus, ProductStatusDisplayNames } from '../../consts/product-status';
 
 const addNewProductIcon = require('../../shared/icons/add.png')
 
@@ -37,13 +40,13 @@ const AddProduct:React.FC<Props> = ({loading, categories, fetchCategories, creat
     const [collection, setCollection] = useState<string>('')
     const [status, setStatus] = useState<string>('')
     const [description, setDescription] = useState<string>('')
-    const [colors, setColors] = useState<Array<number>>([]);
-    const [sizes, setSizes] = useState<Array<string>>([]);
-    const [sex, setSex] = useState<Sexes>(Sexes.Female)
+    const [colors, setColors] = useState<Array<Colors>>([]);
+    const [sizes, setSizes] = useState<Array<Sizes>>([]);
+    const [sex, setSex] = useState<Gender>(Gender.FEMALE)
 
     useEffect(() => {
         fetchCategories()
-    })
+    }, [fetchCategories])
 
     const onProductAdd = () => {
         const data: CreateProductDto = {
@@ -86,9 +89,9 @@ const AddProduct:React.FC<Props> = ({loading, categories, fetchCategories, creat
                             value={status}
                             onChange={(e: React.ChangeEvent<{name?: string | undefined, value: any}>) => setStatus(e.target.value)}
                         >
-                            <MenuItem value={'in-stock'}>В наличии</MenuItem>
-                            <MenuItem value={'out-of-stock'}>Нет в наличии</MenuItem>
-                            <MenuItem value={'delivery-expected'}>Ожидается поставка</MenuItem>
+                            <MenuItem value={ProductStatus.IN_STOCK}>{ProductStatusDisplayNames.IN_STOCK}</MenuItem>
+                            <MenuItem value={ProductStatus.OUT_OF_STOCK}>{ProductStatusDisplayNames.OUT_OF_STOCK}</MenuItem>
+                            <MenuItem value={ProductStatus.DELIVERY_EXPECTED}>{ProductStatusDisplayNames.DELIVERY_EXPECTED}</MenuItem>
                         </Select>
                     </FormControl>
                     <FormControl>
@@ -99,9 +102,9 @@ const AddProduct:React.FC<Props> = ({loading, categories, fetchCategories, creat
                             value={sex}
                             onChange={(e: React.ChangeEvent<{name?: string | undefined, value: any}>) => setSex(e.target.value)}
                         >
-                            <MenuItem value={Sexes.Male}>Мужской</MenuItem>
-                            <MenuItem value={Sexes.Female}>Женский</MenuItem>
-                            <MenuItem value={Sexes.Unisex}>Юнисекс</MenuItem>
+                            <MenuItem value={Gender.MALE}>{GenderDisplayNames.MALE}</MenuItem>
+                            <MenuItem value={Gender.FEMALE}>{GenderDisplayNames.FEMALE}</MenuItem>
+                            <MenuItem value={Gender.UNISEX}>{GenderDisplayNames.UNISEX}</MenuItem>
                         </Select>
                     </FormControl>
                 </div>
@@ -135,13 +138,13 @@ const AddProduct:React.FC<Props> = ({loading, categories, fetchCategories, creat
                         label="Размер"
                         multiple
                         renderValue={(selected: any) => selected.join(', ')}
-                        value={colors}
-                        onChange={(e: React.ChangeEvent<{name?: string | undefined, value: any}>) => setColors(e.target.value)}
+                        value={sizes}
+                        onChange={(e: React.ChangeEvent<{name?: string | undefined, value: any}>) => setSizes(e.target.value)}
                     >
-                        {[1,2,3,4].map((name) => (
-                            <MenuItem key={name} value={name}>
-                            <Checkbox checked={colors.includes(name)}/>
-                            <ListItemText primary={name} />
+                        {Object.keys(Sizes).map((key) => (
+                            <MenuItem key={key} value={Sizes[key]}>
+                            <Checkbox checked={sizes.includes(Sizes[key])}/>
+                            <ListItemText primary={Sizes[key]} />
                             </MenuItem>
                         ))}
                     </Select>
@@ -154,14 +157,14 @@ const AddProduct:React.FC<Props> = ({loading, categories, fetchCategories, creat
                         id="color-selector"
                         label="Цвет"
                         multiple
-                        renderValue={(selected: any) => selected.join(', ')}
-                        value={sizes}
-                        onChange={(e: React.ChangeEvent<{name?: string | undefined, value: any}>) => setSizes(e.target.value)}
+                        renderValue={(selected: any) => selected.map(color => ColorsDisplayNames[color]).join(', ')}
+                        value={colors}
+                        onChange={(e: React.ChangeEvent<{name?: string | undefined, value: any}>) => setColors(e.target.value)}
                     >
-                        {['1', '2', '3'].map((name) => (
-                            <MenuItem key={name} value={name}>
-                            <Checkbox checked={sizes.includes(name)}/>
-                            <ListItemText primary={name} />
+                        {Object.keys(Colors).map((key) => (
+                            <MenuItem key={Colors[key]} value={Colors[key]}>
+                            <Checkbox checked={colors.includes(Colors[key])}/>
+                            <ListItemText primary={ColorsDisplayNames[key]} />
                             </MenuItem>
                         ))}
                     </Select>

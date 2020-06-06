@@ -1,6 +1,6 @@
-import { Sizes } from "../constants/sizes";
-import { Gender } from "../constants/gender";
-import { Colors } from "../constants/colors";
+import { Sizes } from "../consts/sizes";
+import { Gender } from "../consts/gender";
+import { Colors } from "../consts/colors";
 
 export interface CreateProductDto {
     title: string;
