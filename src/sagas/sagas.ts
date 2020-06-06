@@ -20,13 +20,33 @@ function* fetchProducts(action: ActionTypeWithStringPayload){
 
 function* createProduct(action: ActionTypeWithProductDto){
     try {
-        const response = yield call(async () => await fetch(`${Endpoints.Product.getAll}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(action.payload)
+        const data = new FormData()
+        data.append('productInfo', JSON.stringify({
+            title: action.payload.title,
+            categories: action.payload.title,
+            collection: action.payload.collection,
+            price: action.payload.price,
+            salePrice: action.payload.salePrice,
+            status: action.payload.status,
+            description: action.payload.description,
+            productThumbnail: action.payload.productThumbnail,
+            colors: action.payload.colors,
+            sizes: action.payload.sizes,
+            sex: action.payload.sex,
+            shopId: action.payload.shopId
         }));
+
+        action.payload.productImages.map((image) => {
+            data.append('files', image)
+        })
+
+        const response = yield call(async () => {
+            await fetch(`${Endpoints.Product.getAll}`, {
+                method: 'POST',
+                body: data
+            })
+        });
+
         const parsed = yield call(async () => await response.json());
         if (!parsed.message) {
             yield put(createProductSuccess(parsed));

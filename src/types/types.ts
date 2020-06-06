@@ -8,7 +8,7 @@ export interface CreateProductDto {
     sizes: string[];
     description: string;
     collection: string;
-    productImages: string[];
+    productImages: File[];
     sex: string;
     shopId: string;
     productThumbnail: string;

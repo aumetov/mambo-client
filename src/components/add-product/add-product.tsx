@@ -50,12 +50,12 @@ const AddProduct:React.FC<Props> = ({loading, createProduct}:Props) => {
             description,
             colors,
             sizes,
-            productImages: ['1'],
+            productImages,
             sex,
             shopId: 'testShopId',
             productThumbnail: '1'
         };
-        console.log(productImages)
+
         createProduct(data)
     }
 
