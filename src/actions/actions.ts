@@ -8,3 +8,7 @@ export const getProductsResponse = (data:Array<any>) => ({type: actionTypes.RECI
 export const createProductRequest = (product: CreateProductDto) => ({type: actionTypes.CREATE_PRODUCT, payload: product})
 
 export const createProductSuccess = (product: CreateProductDto[]) => ({type: actionTypes.CREATE_PRODUCT_SUCCESS, payload: product})
+
+export const fetchCategoriesRequest = () => ({type: actionTypes.FETCH_CATEGORIES_REQUEST})
+
+export const fetchCategoriesResponse = (data:Array<any>) => ({type: actionTypes.FETCH_CATEGORIES_SUCCESS, payload: data})

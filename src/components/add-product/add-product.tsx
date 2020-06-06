@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './add-product.scss'
 import { connect, ConnectedProps } from "react-redux";
 import TextField from '@material-ui/core/TextField';
@@ -8,7 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-import { createProductRequest } from '../../actions/actions';
+import { createProductRequest, fetchCategoriesRequest } from '../../actions/actions';
 import { CreateProductDto } from '../../types/types';
 import { Sexes } from '../../consts/sex-enums';
 import ImageUploader from "react-images-upload";
@@ -17,18 +17,20 @@ const addNewProductIcon = require('../../shared/icons/add.png')
 
 interface RootState{
     loading: boolean
+    categories: string[]
 }
 
 interface RootDispatch{
+    fetchCategories: () => void;
     createProduct: (product: CreateProductDto) => void;
 }
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & RootDispatch;
 
-const AddProduct:React.FC<Props> = ({loading, createProduct}:Props) => {
+const AddProduct:React.FC<Props> = ({loading, categories, fetchCategories, createProduct}:Props) => {
     const [title, setTitle] = useState<string>('')
-    const [categories, setCategories] = useState<Array<number>>([1,2])
+    const [productCategories, setCategories] = useState<Array<number>>([1,2])
     const [price, setPrice] = useState<number>(0)
     const [salePrice, setSalePrice] = useState<number>(0)
     const [productImages, setProductImages] = useState<Array<File>>([]) 
@@ -39,10 +41,14 @@ const AddProduct:React.FC<Props> = ({loading, createProduct}:Props) => {
     const [sizes, setSizes] = useState<Array<string>>([]);
     const [sex, setSex] = useState<Sexes>(Sexes.Female)
 
+    useEffect(() => {
+        fetchCategories()
+    })
+
     const onProductAdd = () => {
         const data: CreateProductDto = {
             title,
-            categories,
+            categories: productCategories,
             price,
             salePrice,
             collection,
@@ -68,7 +74,7 @@ const AddProduct:React.FC<Props> = ({loading, createProduct}:Props) => {
             <div className='main-product-info'>
                 <div className='main-product-info-textfields'>
                     <TextField label="Название" value={title} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)} className='product-info-input'/>
-                    <TextField label="Категория" value={categories} className='product-info-input'/>
+                    <TextField label="Категория" value={productCategories} className='product-info-input'/>
                     <TextField label="Цена" value={price} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPrice(parseInt(e.target.value))} type='number' className='product-info-input'/>
                     <TextField label="Цена распродажи" value={salePrice} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSalePrice(parseInt(e.target.value))} type='number' className='product-info-input'/>
                     <TextField label="Коллекция" value={collection} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCollection(e.target.value)} className='product-info-input'/>
@@ -171,12 +177,14 @@ const AddProduct:React.FC<Props> = ({loading, createProduct}:Props) => {
     )
 }
 
-const mapStateToProps: ({loading}:RootState) => RootState = ({loading}:RootState) => ({
-    loading
+const mapStateToProps = (state: RootState) => ({
+    loading: state.loading,
+    categories: state.categories
 });
 
 const mapDispatchToProps:RootDispatch = ({
     createProduct: createProductRequest,
+    fetchCategories: fetchCategoriesRequest
 });
 
 const connector = connect(

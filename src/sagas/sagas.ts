@@ -1,6 +1,6 @@
 import {put,takeLatest,all,call} from 'redux-saga/effects';
 import {ActionTypeWithStringPayload, ActionTypeWithProductDto} from '../types/actions';
-import {getProductsResponse, createProductSuccess} from '../actions/actions';          
+import {getProductsResponse, createProductSuccess, fetchCategoriesResponse} from '../actions/actions';          
 import { actionTypes } from '../consts/actions';
 import Endpoints from '../consts/endpoints';
 
@@ -58,6 +58,20 @@ function* createProduct(action: ActionTypeWithProductDto){
     }
 }
 
+function* fetchCategories(action: ActionTypeWithStringPayload){
+    try {
+        const response = yield call(async () => await fetch(`${Endpoints.Categories.categories}`));
+        const parsed = yield call(async () => await response.json());
+        if (!parsed.message) {
+            yield put(fetchCategoriesResponse(parsed));
+        } else {
+            yield put(fetchCategoriesResponse([]));
+        }
+    } catch(e) {
+        console.log(e)
+    }
+}
+
 function* responseFetchSearch(){
     yield takeLatest(actionTypes.FETCH_PRODUCTS, fetchProducts)
 }
@@ -66,9 +80,14 @@ function* requestCreateProduct(){
     yield takeLatest(actionTypes.CREATE_PRODUCT, createProduct)
 }
 
+function* requestCategories(){
+    yield takeLatest(actionTypes.FETCH_CATEGORIES_REQUEST, fetchCategories)
+}
+
 export default function* rootSaga(){
     yield all([
         responseFetchSearch(),
-        requestCreateProduct()
+        requestCreateProduct(),
+        requestCategories()
     ])
 }

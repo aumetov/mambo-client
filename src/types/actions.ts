@@ -15,3 +15,8 @@ export interface ActionTypeWithProductDto{
     type: actionTypes;
     payload: CreateProductDto;
 }
+
+export interface ActionTypeWithAny{
+    type: actionTypes;
+    payload: any
+}
