@@ -40,7 +40,7 @@
         justify-content: flex-end;
         margin: 20px 130px;
 
-        .save-product-button {
+        .edit-product-button {
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -56,10 +56,9 @@
             outline: none;
             cursor: pointer;
 
-            .add-product-icon {
+            .save-product-icon {
                 width: 25px;
                 height: 25px;
-                margin-right: 10px;
             }
         }
 
