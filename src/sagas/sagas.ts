@@ -1,6 +1,6 @@
 import {put,takeLatest,all,call} from 'redux-saga/effects';
-import {ActionTypeWithStringPayload, ActionTypeWithProductDto} from '../types/actions';
-import {getProductsResponse, createProductSuccess, fetchCategoriesResponse} from '../actions/actions';          
+import {ActionTypeWithStringPayload, ActionTypeWithProductDto, ActionTypeWithUpdateProductDto} from '../types/actions';
+import {getProductsResponse, createProductSuccess, updateProductSuccess, fetchCategoriesResponse} from '../actions/actions';          
 import { actionTypes } from '../consts/actions';
 import Endpoints from '../consts/endpoints';
 
@@ -58,6 +58,47 @@ function* createProduct(action: ActionTypeWithProductDto){
     }
 }
 
+function* updateProduct(action: ActionTypeWithUpdateProductDto){
+    try {
+        const data = new FormData()
+        data.append('productInfo', JSON.stringify({
+            title: action.payload.title,
+            categories: action.payload.categories.map(category => category._id),
+            collection: action.payload.collection,
+            price: action.payload.price,
+            salePrice: action.payload.salePrice,
+            status: action.payload.status,
+            description: action.payload.description,
+            productThumbnail: action.payload.productThumbnail,
+            colors: action.payload.colors,
+            sizes: action.payload.sizes,
+            sex: action.payload.sex,
+            shopId: action.payload.shopId,
+            id: action.payload.id
+        }));
+
+        action.payload.productImages.map((image) => {
+            data.append('files', image)
+        })
+
+        const response = yield call(async () => {
+            await fetch(`${Endpoints.Product.getAll}`, {
+                method: 'PUT',
+                body: data
+            })
+        });
+
+        const parsed = yield call(async () => await response.json());
+        if (!parsed.message) {
+            yield put(updateProductSuccess(parsed));
+        } else {
+            yield put(updateProductSuccess([]));
+        }
+    } catch(e) {
+        console.log(e)
+    }
+}
+
 function* fetchCategories(action: ActionTypeWithStringPayload){
     try {
         const response = yield call(async () => await fetch(`${Endpoints.Categories.categories}`));
@@ -80,6 +121,10 @@ function* requestCreateProduct(){
     yield takeLatest(actionTypes.CREATE_PRODUCT, createProduct)
 }
 
+function* requestUpdateProduct(){
+    yield takeLatest(actionTypes.UPDATE_PRODUCT, updateProduct)
+}
+
 function* requestCategories(){
     yield takeLatest(actionTypes.FETCH_CATEGORIES_REQUEST, fetchCategories)
 }
@@ -88,6 +133,7 @@ export default function* rootSaga(){
     yield all([
         responseFetchSearch(),
         requestCreateProduct(),
+        requestUpdateProduct(),
         requestCategories()
     ])
 }

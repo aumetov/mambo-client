@@ -1,5 +1,5 @@
 import { actionTypes } from "../consts/actions";
-import { CreateProductDto } from "./types";
+import { CreateProductDto, UpdateProductDto } from "./types";
 
 export interface ActionTypeWithStringPayload{
     type: typeof actionTypes.FETCH_PRODUCTS;
@@ -14,6 +14,11 @@ export interface ActionTypeWithArray{
 export interface ActionTypeWithProductDto{
     type: actionTypes;
     payload: CreateProductDto;
+}
+
+export interface ActionTypeWithUpdateProductDto{
+    type: actionTypes;
+    payload: UpdateProductDto;
 }
 
 export interface ActionTypeWithAny{

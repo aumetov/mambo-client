@@ -12,9 +12,9 @@ import { Gender, GenderDisplayNames } from '../../consts/gender';
 import { Colors, ColorsDisplayNames } from '../../consts/colors';
 import { Sizes } from '../../consts/sizes';
 import { ProductStatus, ProductStatusDisplayNames } from '../../consts/product-status';
-import { CreateProductDto } from '../../types/types';
+import { UpdateProductDto } from '../../types/types';
 import { connect, ConnectedProps } from "react-redux";
-import { createProductRequest, fetchCategoriesRequest } from '../../actions/actions';
+import { updateProductRequest, fetchCategoriesRequest } from '../../actions/actions';
 
 const addNewProductIcon = require('../../shared/icons/add.png')
 const deleteIcon = require('../../shared/icons/delete.png')
@@ -26,13 +26,13 @@ interface RootState{
 
 interface RootDispatch{
     fetchCategories: () => void;
-    createProduct: (product: CreateProductDto) => void;
+    updateProduct: (product: UpdateProductDto) => void;
 }
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & RootDispatch;
 
-const EditProduct:React.FC<Props> = ({loading, categories, fetchCategories, createProduct}:Props) => {
+const EditProduct:React.FC<Props> = ({loading, categories, fetchCategories, updateProduct}:Props) => {
     const [title, setTitle] = useState<string>('')
     const [productCategories, setCategories] = useState<Array<any>>([])
     const [price, setPrice] = useState<number>(0)
@@ -43,14 +43,15 @@ const EditProduct:React.FC<Props> = ({loading, categories, fetchCategories, crea
     const [description, setDescription] = useState<string>('')
     const [colors, setColors] = useState<Array<Colors>>([]);
     const [sizes, setSizes] = useState<Array<Sizes>>([]);
-    const [sex, setSex] = useState<Gender>(Gender.FEMALE)
+    const [sex, setSex] = useState<Gender>(Gender.FEMALE);
+    const [id, setId] = useState<string>('');
 
     useEffect(() => {
         fetchCategories()
     }, [fetchCategories])
 
     const onProductAdd = () => {
-        const data: CreateProductDto = {
+        const data: UpdateProductDto = {
             title,
             categories: productCategories,
             price,
@@ -63,14 +64,15 @@ const EditProduct:React.FC<Props> = ({loading, categories, fetchCategories, crea
             productImages,
             sex,
             shopId: 'testShopId',
-            productThumbnail: '1'
+            productThumbnail: '1',
+            id
         };
 
-        createProduct(data)
+        updateProduct(data)
     }
 
     const onProductDelete = () => {
-        const data: CreateProductDto = {
+        const data: UpdateProductDto = {
             title,
             categories: productCategories,
             price,
@@ -83,10 +85,12 @@ const EditProduct:React.FC<Props> = ({loading, categories, fetchCategories, crea
             productImages,
             sex,
             shopId: 'testShopId',
-            productThumbnail: '1'
+            productThumbnail: '1',
+            id
         };
 
-        createProduct(data)
+        //add delete logic
+        updateProduct(data)
     }
 
     const onDrop = (pictureFiles: File[], pictureDataURLs: string[]) => {
@@ -230,7 +234,7 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps:RootDispatch = ({
-    createProduct: createProductRequest,
+    updateProduct: updateProductRequest,
     fetchCategories: fetchCategoriesRequest
 });
 

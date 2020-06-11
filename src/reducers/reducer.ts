@@ -35,11 +35,21 @@ const fetchToServer = (
                 result: action.payload,
                 loading: false
             };
+        case actionTypes.UPDATE_PRODUCT:
+            return {
+                ...state,
+                loading: true
+            };
+        case actionTypes.UPDATE_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                result: action.payload,
+                loading: false
+            };
         case actionTypes.FETCH_CATEGORIES_REQUEST:
             return {
                 ...state,
                 loading: true
-
             };
         case actionTypes.FETCH_CATEGORIES_SUCCESS:
             return {
