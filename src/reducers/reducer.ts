@@ -46,6 +46,17 @@ const fetchToServer = (
                 result: action.payload,
                 loading: false
             };
+        case actionTypes.DELETE_PRODUCT:
+            return {
+                ...state,
+                loading: true
+            };
+        case actionTypes.DELETE_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                result: action.payload,
+                loading: false
+            };
         case actionTypes.FETCH_CATEGORIES_REQUEST:
             return {
                 ...state,

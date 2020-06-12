@@ -16,7 +16,7 @@ export default class AdminPanel extends Component {
                         <Switch>
                             <Route path='/shop-admin' exact component={AdminProducts}/>
                             <Route path='/shop-admin/add-product/' component={AddProduct}/>
-                            <Route path='/shop-admin/edit-product/' component={EditProduct}/>
+                            <Route path='/shop-admin/edit-product/:id' component={EditProduct}/>
                         </Switch>
                     </Router>
                 </div>

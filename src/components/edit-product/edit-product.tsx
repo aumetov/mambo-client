@@ -14,7 +14,7 @@ import { Sizes } from '../../consts/sizes';
 import { ProductStatus, ProductStatusDisplayNames } from '../../consts/product-status';
 import { UpdateProductDto } from '../../types/types';
 import { connect, ConnectedProps } from "react-redux";
-import { updateProductRequest, fetchCategoriesRequest } from '../../actions/actions';
+import { updateProductRequest, deleteProductRequest, fetchCategoriesRequest } from '../../actions/actions';
 
 const addNewProductIcon = require('../../shared/icons/add.png')
 const deleteIcon = require('../../shared/icons/delete.png')
@@ -27,12 +27,13 @@ interface RootState{
 interface RootDispatch{
     fetchCategories: () => void;
     updateProduct: (product: UpdateProductDto) => void;
+    deleteProduct: (id: string) => void;
 }
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & RootDispatch;
 
-const EditProduct:React.FC<Props> = ({loading, categories, fetchCategories, updateProduct}:Props) => {
+const EditProduct:React.FC<Props> = ({loading, categories, fetchCategories, updateProduct, deleteProduct}:Props) => {
     const [title, setTitle] = useState<string>('')
     const [productCategories, setCategories] = useState<Array<any>>([])
     const [price, setPrice] = useState<number>(0)
@@ -72,25 +73,7 @@ const EditProduct:React.FC<Props> = ({loading, categories, fetchCategories, upda
     }
 
     const onProductDelete = () => {
-        const data: UpdateProductDto = {
-            title,
-            categories: productCategories,
-            price,
-            salePrice,
-            collection,
-            status,
-            description,
-            colors,
-            sizes,
-            productImages,
-            sex,
-            shopId: 'testShopId',
-            productThumbnail: '1',
-            id
-        };
-
-        //add delete logic
-        updateProduct(data)
+        deleteProduct(id)
     }
 
     const onDrop = (pictureFiles: File[], pictureDataURLs: string[]) => {
@@ -235,6 +218,7 @@ const mapStateToProps = (state: RootState) => ({
 
 const mapDispatchToProps:RootDispatch = ({
     updateProduct: updateProductRequest,
+    deleteProduct: deleteProductRequest,
     fetchCategories: fetchCategoriesRequest
 });
 

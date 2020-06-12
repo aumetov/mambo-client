@@ -1,6 +1,6 @@
 import {put,takeLatest,all,call} from 'redux-saga/effects';
-import {ActionTypeWithStringPayload, ActionTypeWithProductDto, ActionTypeWithUpdateProductDto} from '../types/actions';
-import {getProductsResponse, createProductSuccess, updateProductSuccess, fetchCategoriesResponse} from '../actions/actions';          
+import {ActionTypeWithStringPayload, ActionTypeWithProductDto, ActionTypeWithUpdateProductDto, ActionTypeWithAny} from '../types/actions';
+import {getProductsResponse, createProductSuccess, updateProductSuccess, deleteProductSuccess, fetchCategoriesResponse} from '../actions/actions';          
 import { actionTypes } from '../consts/actions';
 import Endpoints from '../consts/endpoints';
 
@@ -99,6 +99,25 @@ function* updateProduct(action: ActionTypeWithUpdateProductDto){
     }
 }
 
+function* deleteProduct(action: ActionTypeWithAny){
+    try {
+        const response = yield call(async () => {
+            await fetch(`${Endpoints.Product.getAll}/${action.payload.id}`, {
+                method: 'DELETE'
+            })
+        });
+
+        const parsed = yield call(async () => await response.json());
+        if (!parsed.message) {
+            yield put(deleteProductSuccess(parsed));
+        } else {
+            yield put(deleteProductSuccess(''));
+        }
+    } catch(e) {
+        console.log(e)
+    }
+}
+
 function* fetchCategories(action: ActionTypeWithStringPayload){
     try {
         const response = yield call(async () => await fetch(`${Endpoints.Categories.categories}`));
@@ -125,6 +144,10 @@ function* requestUpdateProduct(){
     yield takeLatest(actionTypes.UPDATE_PRODUCT, updateProduct)
 }
 
+function* requestDeleteProduct(){
+    yield takeLatest(actionTypes.DELETE_PRODUCT, deleteProduct)
+}
+
 function* requestCategories(){
     yield takeLatest(actionTypes.FETCH_CATEGORIES_REQUEST, fetchCategories)
 }
@@ -134,6 +157,7 @@ export default function* rootSaga(){
         responseFetchSearch(),
         requestCreateProduct(),
         requestUpdateProduct(),
+        requestDeleteProduct(),
         requestCategories()
     ])
 }

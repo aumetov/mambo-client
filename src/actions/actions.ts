@@ -13,6 +13,10 @@ export const updateProductRequest = (product: UpdateProductDto) => ({type: actio
 
 export const updateProductSuccess = (product: UpdateProductDto[]) => ({type: actionTypes.UPDATE_PRODUCT_SUCCESS, payload: product})
 
+export const deleteProductRequest = (id: string) => ({type: actionTypes.DELETE_PRODUCT, payload: id})
+
+export const deleteProductSuccess = (id: string) => ({type: actionTypes.DELETE_PRODUCT_SUCCESS, payload: id})
+
 export const fetchCategoriesRequest = () => ({type: actionTypes.FETCH_CATEGORIES_REQUEST})
 
 export const fetchCategoriesResponse = (data:Array<any>) => ({type: actionTypes.FETCH_CATEGORIES_SUCCESS, payload: data})
