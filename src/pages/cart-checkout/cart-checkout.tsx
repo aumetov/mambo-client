@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './cart-checkout.scss'
+import CartProductsTable from '../../components/cart-products-table/cart-products-table'
 
 export default class CartCheckout extends Component {
     render() {
@@ -7,6 +8,7 @@ export default class CartCheckout extends Component {
             <div className='cart-checkout-container'>
                 <div className='cart-products-info-list'>
                     <h3 className='cart-checkout-title'>Корзина</h3>
+                    <CartProductsTable/>
                     <div className='price-info-container'>
                         <div className='subtotal-price-container'>
                             <p className='subtotal-title'>Subtotal:</p>

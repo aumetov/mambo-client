@@ -19,13 +19,23 @@
             cursor: pointer;
         }
 
-        h2 {
-            font-size: 32px;
-            font-weight: bold;
-            margin: 0;
-            padding-left: 20px;
-            padding-bottom: 10px;
+        a {
+            outline: none;
+            text-decoration: none;
+
+            &:visited {
+                color: black;
+            }
+
+            h2 {
+                font-size: 32px;
+                font-weight: bold;
+                margin: 0;
+                padding-left: 20px;
+                padding-bottom: 10px;
+            }
         }
+        
     }
 
     .header-right-container {
