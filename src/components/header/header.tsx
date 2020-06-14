@@ -15,7 +15,7 @@ export default class Header extends Component {
                 </div>
 
                 <div className='header-right-container'>
-                    <button className='sing-in-register-button'>Sign in | Register</button>
+                    <Link to='/login'><button className='sing-in-register-button'>Sign in | Register</button></Link>
                     <Link to='/cart'><img className='shopping-cart-icon' alt='shopping-cart' src={shoppingBagIcon}/></Link>
                 </div>
             </div>
