@@ -34,3 +34,8 @@ export interface UpdateProductDto {
     productThumbnail: string;
     id: string;
 }
+
+export interface PriceRange {
+    min: number,
+    max: number
+}

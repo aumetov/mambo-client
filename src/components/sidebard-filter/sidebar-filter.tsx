@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react'
 import './sidebar-filter.scss'
 import { connect, ConnectedProps } from "react-redux";
 import 'react-input-range/lib/css/index.css'
-import InputRange from 'react-input-range';
+import InputRange, {Range} from 'react-input-range';
 import { getProductsRequest, fetchCategoriesRequest } from '../../actions/actions';
+import { Gender } from '../../consts/gender';
+import { Sizes } from '../../consts/sizes';
+import { Colors } from '../../consts/colors';
+import { PriceRange } from '../../types/types';
 
 interface RootState{
     products: any[],
@@ -19,6 +23,12 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & RootDispatch;
 
 const SidebarFilter:React.FC<Props> = ({products, fetchProducts, categories, fetchCategories}:Props) => {
+    const [category, setCategory] = useState<string>('')
+    const [sex, setSex] = useState<Array<Gender>>([Gender.UNISEX])
+    const [sizes, setSizes] = useState<Array<Sizes>>([])
+    const [colors, setColors] = useState<Array<Colors>>([])
+    const [priceRange, setPriceRange] = useState<PriceRange>({min:0, max: 2500})
+
     useEffect(() => {
         fetchCategories()
     }, [fetchCategories])
@@ -29,7 +39,7 @@ const SidebarFilter:React.FC<Props> = ({products, fetchProducts, categories, fet
                 <div className='categories-filter'>
                     <p className='filter-title'>Категории</p>
                     {categories.map(category => (
-                        <p className='category'>{category.displayTitle}</p>
+                        <p className='category' key={category._id}>{category.displayTitle}</p>
                     ))}
                 </div>
 
@@ -47,14 +57,9 @@ const SidebarFilter:React.FC<Props> = ({products, fetchProducts, categories, fet
                 <div className='size-filter'>
                     <p className='filter-title'>Размеры</p>
                     <div className='sizes'>
-                        <div className='size'/>
-                        <div className='size'/>
-                        <div className='size'/>
-                        <div className='size'/>
-                        <div className='size'/>
-                        <div className='size'/>
-                        <div className='size'/>
-                        <div className='size'/>
+                        {Object.keys(Sizes).map(size => (
+                            <div className='size' key={size}>{Sizes[size]}</div>
+                        ))}
                     </div>
                 </div>
 
@@ -77,12 +82,12 @@ const SidebarFilter:React.FC<Props> = ({products, fetchProducts, categories, fet
                 <div className='price-filter'>
                     <p className='filter-title'>Цена</p>
                     <InputRange
-                        maxValue={100}
+                        maxValue={10000}
                         minValue={0}
                         formatLabel={value => `${value} с`}
-                        value={{min:0, max:20}}
-                        onChange={value => console.log(value)}
-                        onChangeComplete={value => console.log(value)}
+                        value={priceRange}
+                        onChange={(value: any) => {setPriceRange(value)}}
+                        onChangeComplete={(value: any) => {}}
                     />
                 </div>
             </div>

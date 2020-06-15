@@ -57,11 +57,15 @@
                 flex-flow: row wrap;
                 .size {
                     display: flex;
-                    width: 35px;
+                    width: 34px;
                     height: 24px;
-                    background: #c4c4c4;
+                    background: transparent;
+                    border: 1px solid #c4c4c4;
                     margin-right: 12px;
                     margin-bottom: 10px;
+                    text-align: center;
+                    justify-content: center;
+                    color: #c4c4c4;
                     cursor: pointer;
                 }
 
