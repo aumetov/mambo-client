@@ -6,7 +6,7 @@ import InputRange, {Range} from 'react-input-range';
 import { getProductsRequest, fetchCategoriesRequest } from '../../actions/actions';
 import { Gender } from '../../consts/gender';
 import { Sizes } from '../../consts/sizes';
-import { Colors } from '../../consts/colors';
+import { Colors, ColorsHexCodes } from '../../consts/colors';
 import { PriceRange } from '../../types/types';
 
 interface RootState{
@@ -66,16 +66,9 @@ const SidebarFilter:React.FC<Props> = ({products, fetchProducts, categories, fet
                 <div className='color-filter'>
                     <p className='filter-title'>Цвета</p>
                     <div className='colors'>
-                        <div className='color'/>
-                        <div className='color'/>
-                        <div className='color'/>
-                        <div className='color'/>
-                        <div className='color'/>
-                        <div className='color'/>
-                        <div className='color'/>
-                        <div className='color'/>
-                        <div className='color'/>
-                        <div className='color'/>
+                        {Object.keys(ColorsHexCodes).map(color => (
+                            <div className='color' style={{background: ColorsHexCodes[color]}}/>
+                        ))}
                     </div>
                 </div>
 

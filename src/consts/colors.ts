@@ -31,3 +31,20 @@ export enum ColorsDisplayNames {
     BLACK = "Черный",
     GRAY = "Серый"
 }
+
+export enum ColorsHexCodes {
+    RED = "#FF5757",
+    ORANGE = "#FFA857",
+    YELLOW = "#FFEE57",
+    GREEN = "#57FF7C",
+    SKYBLUE = "#72B3FF",
+    BLUE = "#0D70E4",
+    PURPLE = "#C172FF",
+    PINK = "#FF72CF",
+    KHAKI = "#DBD19E",
+    BEIGE = "#EBE7D0",
+    PEACH = "#FF6187",
+    WHITE = "#FFFFFF",
+    BLACK = "#171717",
+    GRAY = "#E5E5E5"
+}

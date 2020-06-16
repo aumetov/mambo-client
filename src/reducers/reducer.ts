@@ -6,6 +6,7 @@ const initialStore:StoreTypes = {
     result: null,
     loading: false,
     categories: [],
+    products: []
 };
 
 const fetchToServer = (
