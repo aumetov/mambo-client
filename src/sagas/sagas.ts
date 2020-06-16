@@ -6,7 +6,7 @@ import Endpoints from '../consts/endpoints';
 
 function* fetchProducts(action: ActionTypeWithStringPayload){
     try {
-        const response = yield call(async () => await fetch(`${Endpoints.Product.getAll}?q=${action.payload}`));
+        const response = yield call(async () => await fetch(`${Endpoints.Product.getAll}?${action.payload}`));
         const parsed = yield call(async () => await response.json());
         if (!parsed.message) {
             yield put(getProductsResponse(parsed));

@@ -39,3 +39,11 @@ export interface PriceRange {
     min: number,
     max: number
 }
+
+export interface SearchFilter {
+    category?: string;
+    sexes?: Gender[];
+    sizes?: Sizes[];
+    colors?: Colors[];
+    priceRange: PriceRange;
+}

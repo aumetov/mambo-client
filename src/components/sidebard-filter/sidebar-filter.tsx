@@ -7,7 +7,8 @@ import { getProductsRequest, fetchCategoriesRequest } from '../../actions/action
 import { Gender } from '../../consts/gender';
 import { Sizes } from '../../consts/sizes';
 import { Colors, ColorsHexCodes } from '../../consts/colors';
-import { PriceRange } from '../../types/types';
+import { PriceRange, SearchFilter } from '../../types/types';
+import { createQueryString } from '../../utils/create-query';
 
 interface RootState{
     products: any[],
@@ -24,7 +25,7 @@ type Props = PropsFromRedux & RootDispatch;
 
 const SidebarFilter:React.FC<Props> = ({products, fetchProducts, categories, fetchCategories}:Props) => {
     const [category, setCategory] = useState<string>('')
-    const [sex, setSex] = useState<Array<Gender>>([Gender.UNISEX])
+    const [sexes, setSex] = useState<Array<Gender>>([Gender.UNISEX])
     const [sizes, setSizes] = useState<Array<Sizes>>([])
     const [colors, setColors] = useState<Array<Colors>>([])
     const [priceRange, setPriceRange] = useState<PriceRange>({min:0, max: 2500})
@@ -32,6 +33,30 @@ const SidebarFilter:React.FC<Props> = ({products, fetchProducts, categories, fet
     useEffect(() => {
         fetchCategories()
     }, [fetchCategories])
+
+    const getProducts = () => {
+        const filter: SearchFilter = {
+            category,
+            sexes,
+            sizes,
+            colors,
+            priceRange
+        }
+
+        fetchProducts(createQueryString(filter))
+    }
+
+    useEffect(() => {
+        const filter: SearchFilter = {
+            category,
+            sexes,
+            sizes,
+            colors,
+            priceRange
+        }
+
+        fetchProducts(createQueryString(filter))
+    }, [category, sexes, sizes, colors, fetchProducts])
 
     const selectColor = (color: string) => {
         if (!colors.includes(Colors[color])) {
@@ -51,23 +76,32 @@ const SidebarFilter:React.FC<Props> = ({products, fetchProducts, categories, fet
         }
     }
 
+    const selectSex = (sex: string) => {
+        if (!sexes.includes(Gender[sex])) {
+            setSex([...sexes, Gender[sex]])
+        } else {
+            const newSexes = sexes.filter(c => c !== sex)
+            setSex(newSexes)
+        }
+    }
+
     return (
         <div className='sidebar-filter-container'>
             <div className='filters'>
                 <div className='categories-filter'>
                     <p className='filter-title'>Категории</p>
-                    {categories.map(category => (
-                        <p className='category' key={category._id}>{category.displayTitle}</p>
+                    {categories.map(cat => (
+                        <p className={`category ${category === cat._id && 'selected-category'}`} key={cat._id} onClick={() => {setCategory(cat._id)}}>{cat.displayTitle}</p>
                     ))}
                 </div>
 
                 <div className='sex-filter'>
                     <p className='filter-title'>Пол</p>
                     <div className='sex-checkboxes'>
-                        <input type="checkbox" id="male" name="male" value=""/>
+                        <input type="checkbox" id="male" name="male" checked={sexes.includes(Gender.MALE)} onChange={() => selectSex(Gender.MALE)}/>
                         <label>Мужской</label>
 
-                        <input type="checkbox" id="female" name="female" value=""/>
+                        <input type="checkbox" id="female" name="female" checked={sexes.includes(Gender.FEMALE)} onChange={() => selectSex(Gender.FEMALE)}/>
                         <label>Женский</label>
                     </div>
                 </div>
@@ -76,7 +110,7 @@ const SidebarFilter:React.FC<Props> = ({products, fetchProducts, categories, fet
                     <p className='filter-title'>Размеры</p>
                     <div className='sizes'>
                         {Object.keys(Sizes).map(size => (
-                            <div className='size' key={size} onClick={() => selectSize(size)}>{Sizes[size]}</div>
+                            <div className={`size ${sizes.includes(Sizes[size]) && 'selected-size'}`} key={size} onClick={() => selectSize(size)}>{Sizes[size]}</div>
                         ))}
                     </div>
                 </div>
@@ -85,7 +119,7 @@ const SidebarFilter:React.FC<Props> = ({products, fetchProducts, categories, fet
                     <p className='filter-title'>Цвета</p>
                     <div className='colors'>
                         {Object.keys(ColorsHexCodes).map((color: string) => (
-                            <div className='color' style={{background: ColorsHexCodes[color]}} onClick={() => selectColor(color)}/>
+                            <div className={`color ${colors.includes(Colors[color]) && 'selected-color'}`} key={color} style={{background: ColorsHexCodes[color]}} onClick={() => selectColor(color)}/>
                         ))}
                     </div>
                 </div>
@@ -98,7 +132,7 @@ const SidebarFilter:React.FC<Props> = ({products, fetchProducts, categories, fet
                         formatLabel={value => `${value} с`}
                         value={priceRange}
                         onChange={(value: any) => {setPriceRange(value)}}
-                        onChangeComplete={(value: any) => {}}
+                        onChangeComplete={getProducts}
                     />
                 </div>
             </div>
