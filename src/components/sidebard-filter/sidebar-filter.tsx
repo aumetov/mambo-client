@@ -33,6 +33,24 @@ const SidebarFilter:React.FC<Props> = ({products, fetchProducts, categories, fet
         fetchCategories()
     }, [fetchCategories])
 
+    const selectColor = (color: string) => {
+        if (!colors.includes(Colors[color])) {
+            setColors([...colors, Colors[color]])
+        } else {
+            const newColors = colors.filter(c => c !== color)
+            setColors(newColors)
+        }
+    }
+
+    const selectSize = (size: string) => {
+        if (!sizes.includes(Sizes[size])) {
+            setSizes([...sizes, Sizes[size]])
+        } else {
+            const newSizes = sizes.filter(c => c !== size)
+            setSizes(newSizes)
+        }
+    }
+
     return (
         <div className='sidebar-filter-container'>
             <div className='filters'>
@@ -58,7 +76,7 @@ const SidebarFilter:React.FC<Props> = ({products, fetchProducts, categories, fet
                     <p className='filter-title'>Размеры</p>
                     <div className='sizes'>
                         {Object.keys(Sizes).map(size => (
-                            <div className='size' key={size}>{Sizes[size]}</div>
+                            <div className='size' key={size} onClick={() => selectSize(size)}>{Sizes[size]}</div>
                         ))}
                     </div>
                 </div>
@@ -66,8 +84,8 @@ const SidebarFilter:React.FC<Props> = ({products, fetchProducts, categories, fet
                 <div className='color-filter'>
                     <p className='filter-title'>Цвета</p>
                     <div className='colors'>
-                        {Object.keys(ColorsHexCodes).map(color => (
-                            <div className='color' style={{background: ColorsHexCodes[color]}}/>
+                        {Object.keys(ColorsHexCodes).map((color: string) => (
+                            <div className='color' style={{background: ColorsHexCodes[color]}} onClick={() => selectColor(color)}/>
                         ))}
                     </div>
                 </div>
