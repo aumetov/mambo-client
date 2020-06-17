@@ -11,13 +11,13 @@ interface RootState{
 }
 
 interface RootDispatch{
-    login: (email: string, password: string) => void
+    // login: (email: string, password: string) => void
 }
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & RootDispatch;
 
-export const LoginPage: React.FC<Props> = ({loading, login}) => {
+export const LoginPage: React.FC<Props> = ({loading}) => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
 
@@ -33,9 +33,10 @@ export const LoginPage: React.FC<Props> = ({loading, login}) => {
                 <div className="login-form">
                     <TextField label="Email" value={email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} className='login-input'/>
                     <TextField label="Пароль" value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} className='login-input'/>
+                    <Link to='/forgot-password'><p className='forgot-password-text'>восстановление пароля</p></Link>
                 </div>
                 <div className="login-action-buttons">
-                    <button className='login-button' onClick={() => login(email, password)}>
+                    <button className='login-button'>
                         <img className='login-icon' alt='login' src={addNewProductIcon}/>
                         Войти
                     </button>
@@ -58,13 +59,8 @@ const mapStateToProps = (state: RootState) => ({
     loading: state.loading,
 });
 
-const mapDispatchToProps:RootDispatch = ({
-    login
-});
-
 const connector = connect(
     mapStateToProps,
-    mapDispatchToProps
 );
 
 export default connector(LoginPage);

@@ -8,6 +8,7 @@ import ProductDetails from './pages/product-details/product-details';
 import {MainPage} from './pages/main-page/main-page';
 import CartCheckout from './pages/cart-checkout/cart-checkout';
 import { LoginPage } from './pages/login-page/login-page';
+import { RegisterPage } from './pages/register-page/register-page';
 
 export const App: React.FC<{}> = () => {
   return (
@@ -21,6 +22,7 @@ export const App: React.FC<{}> = () => {
               <Route path='/product' component={ProductDetails}/>
               <Route path='/cart' component={CartCheckout}/>
               <Route path='/login' component={LoginPage}/>
+              <Route path='/register' component={RegisterPage}/>
             </Switch>
         </div>
         </Router>
