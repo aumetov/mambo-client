@@ -6,7 +6,8 @@ const initialStore:StoreTypes = {
     result: null,
     loading: false,
     categories: [],
-    products: []
+    products: [],
+    user: {}
 };
 
 const fetchToServer = (
@@ -67,8 +68,19 @@ const fetchToServer = (
             return {
                 ...state,
                 categories: action.payload,
-                loading: true
+                loading: false
 
+            }
+        case actionTypes.CREATE_USER:
+            return {
+                ...state,
+                loading: true
+            }
+        case actionTypes.CREATE_USER_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                user: action.payload,
             }
         default:
             return state;

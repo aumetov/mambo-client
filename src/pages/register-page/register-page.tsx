@@ -3,20 +3,21 @@ import { connect, ConnectedProps } from "react-redux";
 import { Link } from 'react-router-dom'
 import './register-page.scss'
 import { TextField } from '@material-ui/core';
-import { register } from '../../serviceWorker';
+import { CreateUserDto } from '../../types/types';
+import { createUserRequest } from '../../actions/actions';
 
 interface RootState{
     loading: boolean
 }
 
 interface RootDispatch{
-    // register: (email: string, password: string) => void
+    createUser: (user: CreateUserDto) => void
 }
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & RootDispatch;
 
-export const RegisterPage: React.FC<Props> = ({loading}) => {
+const RegisterPage: React.FC<Props> = ({loading, createUser}: Props) => {
     const [firstName, setFirstName] = useState<string>('')
     const [lastName, setLastName] = useState<string>('')
     const [email, setEmail] = useState<string>('')
@@ -24,7 +25,7 @@ export const RegisterPage: React.FC<Props> = ({loading}) => {
     const [password, setPassword] = useState<string>('')
 
     const onRegisterClick = () => {
-        const userInfo = {
+        const userInfo: CreateUserDto = {
             firstName,
             lastName,
             email,
@@ -32,7 +33,7 @@ export const RegisterPage: React.FC<Props> = ({loading}) => {
             password
         }
 
-        // register(userInfo);
+        createUser(userInfo);
     }
 
     return (
@@ -66,8 +67,13 @@ const mapStateToProps = (state: RootState) => ({
     loading: state.loading,
 });
 
+const mapDispatchToProps:RootDispatch = ({
+    createUser: createUserRequest,
+});
+
 const connector = connect(
     mapStateToProps,
+    mapDispatchToProps
 );
 
 export default connector(RegisterPage);

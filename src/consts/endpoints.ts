@@ -10,4 +10,12 @@ export default class Endpoints {
     static Categories = class {
         static categories = base('categories')
     }
+
+    static Users = class {
+        static register = base('user/register')
+    }
+
+    static Auth = class {
+        static login = base('auth/login')
+    }
 }
