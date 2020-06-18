@@ -3,6 +3,8 @@ import { connect, ConnectedProps } from "react-redux";
 import { Link } from 'react-router-dom'
 import './login-page.scss'
 import { TextField } from '@material-ui/core';
+import { loginUserRequest } from '../../actions/actions';
+import { UserLogin } from '../../types/types';
 
 const addNewProductIcon = require('../../shared/icons/login.png')
 
@@ -11,13 +13,13 @@ interface RootState{
 }
 
 interface RootDispatch{
-    // login: (email: string, password: string) => void
+    login: (userCredentials: UserLogin) => void
 }
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & RootDispatch;
 
-export const LoginPage: React.FC<Props> = ({loading}) => {
+const LoginPage: React.FC<Props> = ({loading, login}) => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
 
@@ -36,7 +38,7 @@ export const LoginPage: React.FC<Props> = ({loading}) => {
                     <Link to='/forgot-password'><p className='forgot-password-text'>восстановление пароля</p></Link>
                 </div>
                 <div className="login-action-buttons">
-                    <button className='login-button'>
+                    <button className='login-button' onClick={() => login({email, password})}>
                         <img className='login-icon' alt='login' src={addNewProductIcon}/>
                         Войти
                     </button>
@@ -59,8 +61,13 @@ const mapStateToProps = (state: RootState) => ({
     loading: state.loading,
 });
 
+const mapDispatchToProps:RootDispatch = ({
+    login: loginUserRequest
+});
+
 const connector = connect(
     mapStateToProps,
+    mapDispatchToProps
 );
 
 export default connector(LoginPage);

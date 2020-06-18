@@ -1,5 +1,5 @@
 import {actionTypes} from '../consts/actions';
-import { CreateProductDto, UpdateProductDto, CreateUserDto } from '../types/types';
+import { CreateProductDto, UpdateProductDto, CreateUserDto, UserLogin } from '../types/types';
 
 export const getProductsRequest = (query:string) => ({type: actionTypes.FETCH_PRODUCTS, payload: query});
 
@@ -24,3 +24,7 @@ export const fetchCategoriesResponse = (data:Array<any>) => ({type: actionTypes.
 export const createUserRequest = (user: CreateUserDto) => ({type: actionTypes.CREATE_USER, payload: user})
 
 export const createUserResponse = (user: CreateUserDto) => ({type: actionTypes.CREATE_USER_SUCCESS, payload: user})
+
+export const loginUserRequest = (userCredentials: UserLogin) => ({type: actionTypes.LOGIN_USER, payload: userCredentials})
+
+export const loginUserResponse = (user: CreateUserDto) => ({type: actionTypes.LOGIN_USER_SUCCESS, payload: user})

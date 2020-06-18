@@ -7,7 +7,7 @@ import AdminPanel from './pages/admin-panel/admin-panel';
 import ProductDetails from './pages/product-details/product-details';
 import {MainPage} from './pages/main-page/main-page';
 import CartCheckout from './pages/cart-checkout/cart-checkout';
-import { LoginPage } from './pages/login-page/login-page';
+import LoginPage from './pages/login-page/login-page';
 import RegisterPage from './pages/register-page/register-page';
 
 export const App: React.FC<{}> = () => {

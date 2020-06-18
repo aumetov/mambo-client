@@ -82,6 +82,17 @@ const fetchToServer = (
                 loading: false,
                 user: action.payload,
             }
+        case actionTypes.LOGIN_USER:
+            return {
+                ...state,
+                loading: true
+            }
+        case actionTypes.LOGIN_USER_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                user: action.payload,
+            }
         default:
             return state;
     }

@@ -1,6 +1,6 @@
 import {put,takeLatest,all,call} from 'redux-saga/effects';
 import {ActionTypeWithStringPayload, ActionTypeWithProductDto, ActionTypeWithUpdateProductDto, ActionTypeWithAny} from '../types/actions';
-import {getProductsResponse, createProductSuccess, updateProductSuccess, deleteProductSuccess, fetchCategoriesResponse, createUserResponse} from '../actions/actions';          
+import {getProductsResponse, createProductSuccess, updateProductSuccess, deleteProductSuccess, fetchCategoriesResponse, createUserResponse, loginUserResponse} from '../actions/actions';          
 import { actionTypes } from '../consts/actions';
 import Endpoints from '../consts/endpoints';
 
@@ -153,6 +153,27 @@ function* createUser(action: ActionTypeWithAny){
     }
 }
 
+function* loginUser(action: ActionTypeWithAny){
+    try {
+        const response = yield call(async () => await fetch(`${Endpoints.Auth.login}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(action.payload)
+        }));
+        const parsed = yield call(async () => await response.json());
+        if (!parsed.message) {
+            yield put(loginUserResponse(parsed));
+        } else {
+            yield put(loginUserResponse(parsed));
+        }
+    } catch(e) {
+        console.log(e)
+    }
+}
+
 function* responseFetchSearch(){
     yield takeLatest(actionTypes.FETCH_PRODUCTS, fetchProducts)
 }
@@ -177,6 +198,10 @@ function* requestCreateUser(){
     yield takeLatest(actionTypes.CREATE_USER, createUser)
 }
 
+function* requestLoginUser(){
+    yield takeLatest(actionTypes.LOGIN_USER, loginUser)
+}
+
 export default function* rootSaga(){
     yield all([
         responseFetchSearch(),
@@ -184,6 +209,7 @@ export default function* rootSaga(){
         requestUpdateProduct(),
         requestDeleteProduct(),
         requestCategories(),
-        requestCreateUser()
+        requestCreateUser(),
+        requestLoginUser()
     ])
 }
