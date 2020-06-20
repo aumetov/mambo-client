@@ -11,7 +11,8 @@ const addToWishList = require('../../shared/icons/add-to-wishlist.png');
 
 interface RootState{
     loading: boolean,
-    productById: ProductDto
+    productById: ProductDto,
+    user: any
 }
 
 interface RootDispatch{
@@ -22,7 +23,7 @@ interface RootDispatch{
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & RootDispatch;
 
-const ProductDetails:React.FC<Props> = ({loading, productById}:Props) => {
+const ProductDetails:React.FC<Props> = ({loading, user, productById}:Props) => {
     const [amount, setAmount] = useState<number>(1)
     const [selectedColor, setColor] = useState<Colors>(productById.colors[0])
     const [selectedSize, setSize] = useState<Sizes>(productById.sizes[0])
@@ -39,7 +40,14 @@ const ProductDetails:React.FC<Props> = ({loading, productById}:Props) => {
             price: productById.price,
         }
 
-        // addProductToCart(item);
+        if (user) {
+            // addProductToCart(item);
+        } else {
+            const cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')!) : []
+            cart.push(item)
+            localStorage.setItem('cart', JSON.stringify(cart))
+        }
+        
     }
     return (
         <div className='product-details-container'>
@@ -86,7 +94,8 @@ const ProductDetails:React.FC<Props> = ({loading, productById}:Props) => {
 
 const mapStateToProps = (state: RootState) => ({
     loading: state.loading,
-    productById: state.productById
+    productById: state.productById,
+    user: any
 });
 
 const mapDispatchToProps:RootDispatch = ({

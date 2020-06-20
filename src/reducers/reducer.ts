@@ -93,6 +93,28 @@ const fetchToServer = (
                 loading: false,
                 user: action.payload,
             }
+        case actionTypes.ADD_ITEM_TO_CART:
+            return {
+                ...state,
+                loading: true
+            }
+        case actionTypes.ADD_ITEM_TO_CART_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                user: action.payload,
+            }
+        case actionTypes.DELETE_ITEM_FROM_CART:
+            return {
+                ...state,
+                loading: true
+            }
+        case actionTypes.DELETE_ITEM_FROM_CART_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                user: action.payload,
+            }
         default:
             return state;
     }

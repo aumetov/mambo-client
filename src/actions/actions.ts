@@ -1,5 +1,5 @@
 import {actionTypes} from '../consts/actions';
-import { CreateProductDto, UpdateProductDto, CreateUserDto, UserLogin } from '../types/types';
+import { CreateProductDto, UpdateProductDto, CreateUserDto, UserLogin, CartItemDto } from '../types/types';
 
 export const getProductsRequest = (query:string) => ({type: actionTypes.FETCH_PRODUCTS, payload: query});
 
@@ -28,3 +28,11 @@ export const createUserResponse = (user: CreateUserDto) => ({type: actionTypes.C
 export const loginUserRequest = (userCredentials: UserLogin) => ({type: actionTypes.LOGIN_USER, payload: userCredentials})
 
 export const loginUserResponse = (user: CreateUserDto) => ({type: actionTypes.LOGIN_USER_SUCCESS, payload: user})
+
+export const addProductToCartRequest = (userId: string, item: CartItemDto) => ({type: actionTypes.ADD_ITEM_TO_CART, payload: {userId, item}})
+
+export const addProductToCartResponse = (user: CreateUserDto) => ({type: actionTypes.ADD_ITEM_TO_CART_SUCCESS, payload: user})
+
+export const deleteProductFromCartRequest = (userId: string, itemId: string) => ({type: actionTypes.DELETE_ITEM_FROM_CART, payload: {userId, itemId}})
+
+export const deleteProductFromCartResponse = (user: CreateUserDto) => ({type: actionTypes.DELETE_ITEM_FROM_CART_SUCCESS, payload: user})

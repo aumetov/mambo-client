@@ -1,6 +1,10 @@
 import {put,takeLatest,all,call} from 'redux-saga/effects';
 import {ActionTypeWithStringPayload, ActionTypeWithProductDto, ActionTypeWithUpdateProductDto, ActionTypeWithAny} from '../types/actions';
-import {getProductsResponse, createProductSuccess, updateProductSuccess, deleteProductSuccess, fetchCategoriesResponse, createUserResponse, loginUserResponse} from '../actions/actions';          
+import {
+    getProductsResponse, createProductSuccess, updateProductSuccess, deleteProductSuccess,
+    fetchCategoriesResponse, createUserResponse, loginUserResponse, addProductToCartResponse,
+    deleteProductFromCartResponse
+} from '../actions/actions';          
 import { actionTypes } from '../consts/actions';
 import Endpoints from '../consts/endpoints';
 
@@ -174,6 +178,47 @@ function* loginUser(action: ActionTypeWithAny){
     }
 }
 
+function* addItemToCart(action: ActionTypeWithAny){
+    try {
+        const response = yield call(async () => await fetch(`${Endpoints.Users.addItemToCart(action.payload.userId)}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify(action.payload.item)
+        }));
+        const parsed = yield call(async () => await response.json());
+        if (!parsed.message) {
+            yield put(addProductToCartResponse(parsed));
+        } else {
+            yield put(addProductToCartResponse(parsed));
+        }
+    } catch(e) {
+        console.log(e)
+    }
+}
+
+function* deleteItemFromCart(action: ActionTypeWithAny){
+    try {
+        const response = yield call(async () => await fetch(`${Endpoints.Users.deleteItemFromCart(action.payload.userId, action.payload.itemId)}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'
+        }));
+        const parsed = yield call(async () => await response.json());
+        if (!parsed.message) {
+            yield put(deleteProductFromCartResponse(parsed));
+        } else {
+            yield put(deleteProductFromCartResponse(parsed));
+        }
+    } catch(e) {
+        console.log(e)
+    }
+}
+
 function* responseFetchSearch(){
     yield takeLatest(actionTypes.FETCH_PRODUCTS, fetchProducts)
 }
@@ -202,6 +247,14 @@ function* requestLoginUser(){
     yield takeLatest(actionTypes.LOGIN_USER, loginUser)
 }
 
+function* requestAddItemToCart(){
+    yield takeLatest(actionTypes.ADD_ITEM_TO_CART, addItemToCart)
+}
+
+function* requestDeleteItemFromCart(){
+    yield takeLatest(actionTypes.DELETE_ITEM_FROM_CART, deleteItemFromCart)
+}
+
 export default function* rootSaga(){
     yield all([
         responseFetchSearch(),
@@ -210,6 +263,8 @@ export default function* rootSaga(){
         requestDeleteProduct(),
         requestCategories(),
         requestCreateUser(),
-        requestLoginUser()
+        requestLoginUser(),
+        requestAddItemToCart(),
+        requestDeleteItemFromCart()
     ])
 }
