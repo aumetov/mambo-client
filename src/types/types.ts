@@ -2,6 +2,24 @@ import { Sizes } from "../consts/sizes";
 import { Gender } from "../consts/gender";
 import { Colors } from "../consts/colors";
 
+export interface ProductDto {
+    _id: string;
+    title: string;
+    categories: any[];
+    status: string;
+    price: number;
+    salePrice: number;
+    colors: Colors[];
+    sizes: Sizes[];
+    description: string;
+    collection: string;
+    productImages: File[];
+    sex: Gender;
+    shopId: string;
+    productCode: string;
+    productThumbnail: string;
+}
+
 export interface CreateProductDto {
     title: string;
     categories: any[];
@@ -15,6 +33,7 @@ export interface CreateProductDto {
     productImages: File[];
     sex: Gender;
     shopId: string;
+    productCode: string;
     productThumbnail: string;
 }
 
@@ -31,6 +50,7 @@ export interface UpdateProductDto {
     productImages: File[];
     sex: Gender;
     shopId: string;
+    productCode: string;
     productThumbnail: string;
     id: string;
 }
@@ -59,4 +79,15 @@ export interface CreateUserDto {
 export interface UserLogin {
     email: string;
     password: string;
+}
+
+export interface CartItemDto {
+    productId: string;
+    productCode: string;
+    shopId: string;
+    title: string;
+    color: Colors;
+    size: Sizes;
+    qty: number;
+    price: number;
 }

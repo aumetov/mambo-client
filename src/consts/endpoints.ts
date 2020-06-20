@@ -13,6 +13,8 @@ export default class Endpoints {
 
     static Users = class {
         static register = base('user/register')
+        static addItemToCart = (id) => base(`/${id}/delete-from-cart`)
+        static deleteItemFromCart = (id, productId) => base(`/${id}/delete-from-cart/${productId}`)
     }
 
     static Auth = class {

@@ -1,55 +1,102 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import './product-details.scss'
+import { connect, ConnectedProps } from "react-redux";
 import ProductGallery from '../../components/product-gallery/product-gallery'
+import { ProductDto, CartItemDto } from '../../types/types';
+import { Colors } from '../../consts/colors';
+import { Sizes } from '../../consts/sizes';
 
 const addToBagIcon = require('../../shared/icons/add-to-bag.png');
 const addToWishList = require('../../shared/icons/add-to-wishlist.png');
 
-export default class ProductDetails extends Component {
-    render() {
-        return (
-            <div className='product-details-container'>
-                <ProductGallery/>
-                <div className='product-info'>
-                    <h3 className='product-info-title'>Go-Go Red Dress</h3>
-                    <p className='product-info-shop'>Nike</p>
-
-                    <div className='size-selection'>
-                        <p className='selection-title'>Размер</p>
-                        <div className='sizes-container'>
-                            <div className='size-option'/>
-                            <div className='size-option'/>
-                            <div className='size-option'/>
-                        </div>
-                    </div>
-
-                    <div className='color-selection'>
-                        <p className='selection-title'>Цвет</p>
-                        <div className='colors-container'>
-                            <div className='color-option'/>
-                            <div className='color-option'/>
-                            <div className='color-option'/>
-                        </div>
-                    </div>
-
-                    <p className='product-old-price'>1750 c</p>
-                    <p className='product-price'>1400 c</p>
-
-                    <div className='product-action-buttons'>
-                        <button className='add-to-cart-button'>
-                            <img className='add-to-cart-icon' alt='add to cart' src={addToBagIcon}/>
-                            Добавить в корзину
-                        </button>
-
-                        <button className='add-to-wishlist-button'>
-                            <img className='add-to-wishlist-icon' alt='add to wishlist' src={addToWishList}/>
-                            в список желаемых
-                        </button>
-                    </div>
-
-                    <p className='description-title'>Описание</p>
-                </div>
-            </div>
-        )
-    }
+interface RootState{
+    loading: boolean,
+    productById: ProductDto
 }
+
+interface RootDispatch{
+    getProductById
+    addProductToCart
+}
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+type Props = PropsFromRedux & RootDispatch;
+
+const ProductDetails:React.FC<Props> = ({loading, productById}:Props) => {
+    const [amount, setAmount] = useState<number>(1)
+    const [selectedColor, setColor] = useState<Colors>(productById.colors[0])
+    const [selectedSize, setSize] = useState<Sizes>(productById.sizes[0])
+
+    const onAddToCart = () => {
+        const item: CartItemDto = {
+            productId: productById._id,
+            productCode: productById.productCode,
+            shopId: productById.shopId,
+            title: productById.title,
+            color: selectedColor,
+            size: selectedSize,
+            qty: amount,
+            price: productById.price,
+        }
+
+        // addProductToCart(item);
+    }
+    return (
+        <div className='product-details-container'>
+            <ProductGallery/>
+            <div className='product-info'>
+                <h3 className='product-info-title'>{productById.title}</h3>
+                <p className='product-info-shop'>{productById.shopId}</p>
+
+                <div className='size-selection'>
+                    <p className='selection-title'>Размер</p>
+                    <div className='sizes-container'>
+                        {productById.sizes.map(size => <div className='size-option'>{Sizes[size]}</div>)}
+                    </div>
+                </div>
+
+                <div className='color-selection'>
+                    <p className='selection-title'>Цвет</p>
+                    <div className='colors-container'>
+                        {productById.colors.map(color => <div className='color-option'>{Colors[color]}</div>)}
+                    </div>
+                </div>
+
+                <p className='product-price'>{productById.price} c</p>
+                {productById.salePrice && <p className='product-sale-price'>{productById.salePrice} c</p>}
+
+                <div className='product-action-buttons'>
+                    <button className='add-to-cart-button' onClick={onAddToCart}>
+                        <img className='add-to-cart-icon' alt='add to cart' src={addToBagIcon}/>
+                        Добавить в корзину
+                    </button>
+
+                    <button className='add-to-wishlist-button'>
+                        <img className='add-to-wishlist-icon' alt='add to wishlist' src={addToWishList}/>
+                        в список желаемых
+                    </button>
+                </div>
+
+                <p className='description-title'>Описание</p>
+                <p>{productById.description}</p>
+            </div>
+        </div>
+    )
+}
+
+const mapStateToProps = (state: RootState) => ({
+    loading: state.loading,
+    productById: state.productById
+});
+
+const mapDispatchToProps:RootDispatch = ({
+    getProductById: () => {},
+    addProductToCart: () => {}
+});
+
+const connector = connect(
+    mapStateToProps,
+    mapDispatchToProps
+);
+
+export default connector(ProductDetails);
