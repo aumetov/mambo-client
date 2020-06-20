@@ -51,14 +51,14 @@ const ProductDetails:React.FC<Props> = ({loading, productById}:Props) => {
                 <div className='size-selection'>
                     <p className='selection-title'>Размер</p>
                     <div className='sizes-container'>
-                        {productById.sizes.map(size => <div className='size-option'>{Sizes[size]}</div>)}
+                        {productById.sizes.map(size => <div className='size-option' onClick={() => setSize(size)}>{Sizes[size]}</div>)}
                     </div>
                 </div>
 
                 <div className='color-selection'>
                     <p className='selection-title'>Цвет</p>
                     <div className='colors-container'>
-                        {productById.colors.map(color => <div className='color-option'>{Colors[color]}</div>)}
+                        {productById.colors.map(color => <div className='color-option' onClick={() => setColor(color)}>{Colors[color]}</div>)}
                     </div>
                 </div>
 
