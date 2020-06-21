@@ -2,9 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { connect, ConnectedProps } from "react-redux";
 import './cart-checkout.scss'
 import CartProductsTable from '../../components/cart-products-table/cart-products-table'
-import { deleteProductFromCartRequest } from '../../actions/actions';
-
-const deleteIcon = require('../../shared/icons/delete.png')
 
 interface RootState{
     loading: boolean,
@@ -12,13 +9,12 @@ interface RootState{
 }
 
 interface RootDispatch{
-    deleteProductFromCartRequest: ({userId: string, itemId: string}) => void
 }
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & RootDispatch;
 
-const CartCheckout:React.FC<Props> = ({loading, user, deleteProductFromCartRequest}:Props) => {
+const CartCheckout:React.FC<Props> = ({loading, user}:Props) => {
     return (
         <div className='cart-checkout-container'>
             <div className='cart-products-info-list'>
@@ -54,13 +50,8 @@ const mapStateToProps = (state: RootState) => ({
     user: state.user
 });
 
-const mapDispatchToProps:RootDispatch = ({
-    deleteItem: deleteProductFromCartRequest
-});
-
 const connector = connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 );
 
 export default connector(CartCheckout);
