@@ -45,6 +45,7 @@ const EditProduct:React.FC<Props> = ({loading, categories, fetchCategories, upda
     const [colors, setColors] = useState<Array<Colors>>([]);
     const [sizes, setSizes] = useState<Array<Sizes>>([]);
     const [sex, setSex] = useState<Gender>(Gender.FEMALE);
+    const [productCode, setProductCode] = useState<string>('')
     const [id, setId] = useState<string>('');
 
     useEffect(() => {
@@ -65,6 +66,7 @@ const EditProduct:React.FC<Props> = ({loading, categories, fetchCategories, upda
             productImages,
             sex,
             shopId: 'testShopId',
+            productCode,
             productThumbnail: '1',
             id
         };

@@ -25,8 +25,8 @@ type Props = PropsFromRedux & RootDispatch;
 
 const ProductDetails:React.FC<Props> = ({loading, user, productById}:Props) => {
     const [amount, setAmount] = useState<number>(1)
-    const [selectedColor, setColor] = useState<Colors>(productById.colors[0])
-    const [selectedSize, setSize] = useState<Sizes>(productById.sizes[0])
+    const [selectedColor, setColor] = useState<Colors | null>(productById ? productById.colors[0] : null)
+    const [selectedSize, setSize] = useState<Sizes | null>(productById ? productById.sizes[0] : null)
 
     const onAddToCart = () => {
         const item: CartItemDto = {
@@ -34,8 +34,8 @@ const ProductDetails:React.FC<Props> = ({loading, user, productById}:Props) => {
             productCode: productById.productCode,
             shopId: productById.shopId,
             title: productById.title,
-            color: selectedColor,
-            size: selectedSize,
+            color: selectedColor!,
+            size: selectedSize!,
             qty: amount,
             price: productById.price,
         }
@@ -95,7 +95,7 @@ const ProductDetails:React.FC<Props> = ({loading, user, productById}:Props) => {
 const mapStateToProps = (state: RootState) => ({
     loading: state.loading,
     productById: state.productById,
-    user: any
+    user: state.user
 });
 
 const mapDispatchToProps:RootDispatch = ({

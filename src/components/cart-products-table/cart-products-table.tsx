@@ -23,6 +23,7 @@ export default class CartProductsTable extends Component {
                             {[1,2,3].map((column) => {
                                 return (
                                 <TableCell>
+                                    <img className='delete-item-icon' src={deleteIcon} alt="delete-cart-item" onClick={() => deleteProductFromCartRequest({userId: user._id, itemId: item.productId})}/>
                                 </TableCell>
                                 );
                             })}

@@ -42,7 +42,8 @@ const AddProduct:React.FC<Props> = ({loading, categories, fetchCategories, creat
     const [description, setDescription] = useState<string>('')
     const [colors, setColors] = useState<Array<Colors>>([]);
     const [sizes, setSizes] = useState<Array<Sizes>>([]);
-    const [sex, setSex] = useState<Gender>(Gender.FEMALE)
+    const [sex, setSex] = useState<Gender>(Gender.FEMALE);
+    const [productCode, setProductCode] = useState<string>('')
 
     useEffect(() => {
         fetchCategories()
@@ -62,6 +63,7 @@ const AddProduct:React.FC<Props> = ({loading, categories, fetchCategories, creat
             productImages,
             sex,
             shopId: 'testShopId',
+            productCode,
             productThumbnail: '1'
         };
 
