@@ -8,13 +8,14 @@
         justify-content: space-between;
         padding-left: 25px;
         
-        a {
+        .product-link {
             outline: none;
             text-decoration: none !important;
-        }
+            color: black;
 
-        .product-card-container {
-            margin-bottom: 30px;
+            .product-card-container {
+                margin-bottom: 30px;
+            }
         }
     }
 }

@@ -4,22 +4,5 @@
 
     .main-page-content {
         width: 1065px;
-
-        .products-list {
-            display: flex;
-            flex-flow: row wrap;
-            justify-content: space-between;
-            margin-top: 15px;
-            .product-link {
-                text-decoration: none;
-                outline: none;
-                color: #171717;
-    
-                .product-card-container {
-                    margin-bottom: 30px;
-                }
-            }
-            
-        }
     }
 }
