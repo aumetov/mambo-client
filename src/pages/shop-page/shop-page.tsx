@@ -1,36 +1,40 @@
 import React, { useState, useEffect } from 'react'
 import './shop-page.scss';
 import { connect, ConnectedProps } from "react-redux";
-import { fetchCategoriesRequest } from '../../actions/actions';
+import { getProductsRequest } from '../../actions/actions';
 import ProductsListing from '../../components/products-listing/products-listing';
 
 interface RootState{
-    loading: boolean
-    categories: any[]
+    loading: boolean,
+    shopId: string
 }
 
 interface RootDispatch{
-    fetchCategories: () => void;
+    getProducts: (query: string) => void;
 }
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & RootDispatch;
 
-const ShopPage:React.FC<Props> = ({loading, categories, fetchCategories}:Props) =>  {
-  return (
-      <div className="shop-page-container">
-          <ProductsListing/>
-      </div>
-  );
+const ShopPage:React.FC<Props> = ({loading, getProducts, shopId}:Props) =>  {
+    useEffect(() => {
+        getProducts(`shopId=${shopId}`)
+    }, [getProducts])
+
+    return (
+        <div className="shop-page-container">
+            <ProductsListing/>
+        </div>
+    );
 }
 
-const mapStateToProps = (state: RootState) => ({
+const mapStateToProps = (state: RootState, props: any) => ({
     loading: state.loading,
-    categories: state.categories
+    shopId: props.match.params.shopId
 });
 
 const mapDispatchToProps:RootDispatch = ({
-    fetchCategories: fetchCategoriesRequest
+    getProducts: getProductsRequest
 });
 
 const connector = connect(

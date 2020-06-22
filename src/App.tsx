@@ -24,7 +24,7 @@ export const App: React.FC<{}> = () => {
               <Route path='/cart' component={CartCheckout}/>
               <Route path='/login' component={LoginPage}/>
               <Route path='/register' component={RegisterPage}/>
-              <Route path='/shop/:id' component={ShopPage}/>
+              <Route path='/shop/:shopId' component={ShopPage}/>
             </Switch>
         </div>
         </Router>
