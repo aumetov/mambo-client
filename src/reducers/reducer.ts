@@ -7,7 +7,8 @@ const initialStore:StoreTypes = {
     loading: false,
     categories: [],
     products: [],
-    user: {}
+    user: {},
+    productById: null
 };
 
 const fetchToServer = (
@@ -114,6 +115,17 @@ const fetchToServer = (
                 ...state,
                 loading: false,
                 user: action.payload,
+            }
+        case actionTypes.FETCH_PRODUCT_DETAILS:
+            return {
+                ...state,
+                loading: true
+            }
+        case actionTypes.FETCH_PRODUCT_DETAILS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                productById: action.payload,
             }
         default:
             return state;

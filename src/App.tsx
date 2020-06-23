@@ -20,7 +20,7 @@ export const App: React.FC<{}> = () => {
             <Switch>
               <Route path='/' exact component={MainPage}/>
               <Route path='/shop-admin/' component={AdminPanel}/>
-              <Route path='/product' component={ProductDetails}/>
+              <Route path='/product/:productId' component={ProductDetails}/>
               <Route path='/cart' component={CartCheckout}/>
               <Route path='/login' component={LoginPage}/>
               <Route path='/register' component={RegisterPage}/>

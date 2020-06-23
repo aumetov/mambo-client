@@ -1,9 +1,13 @@
 import {actionTypes} from '../consts/actions';
-import { CreateProductDto, UpdateProductDto, CreateUserDto, UserLogin, CartItemDto } from '../types/types';
+import { CreateProductDto, UpdateProductDto, CreateUserDto, UserLogin, CartItemDto, ProductDto } from '../types/types';
 
 export const getProductsRequest = (query:string) => ({type: actionTypes.FETCH_PRODUCTS, payload: query});
 
 export const getProductsResponse = (data:Array<any>) => ({type: actionTypes.RECIEVED_PRODUCTS, payload: data})
+
+export const getProductDetailsRequest = (id: string) => ({type: actionTypes.FETCH_PRODUCT_DETAILS, payload: id})
+
+export const getProductDetailsResponse = (productById: ProductDto) => ({type: actionTypes.FETCH_PRODUCT_DETAILS_SUCCESS, payload: productById})
 
 export const createProductRequest = (product: CreateProductDto) => ({type: actionTypes.CREATE_PRODUCT, payload: product})
 

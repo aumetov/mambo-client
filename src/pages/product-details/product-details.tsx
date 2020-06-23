@@ -5,6 +5,7 @@ import ProductGallery from '../../components/product-gallery/product-gallery'
 import { ProductDto, CartItemDto } from '../../types/types';
 import { Colors } from '../../consts/colors';
 import { Sizes } from '../../consts/sizes';
+import { addProductToCartRequest, getProductDetailsRequest } from '../../actions/actions';
 
 const addToBagIcon = require('../../shared/icons/add-to-bag.png');
 const addToWishList = require('../../shared/icons/add-to-wishlist.png');
@@ -16,17 +17,21 @@ interface RootState{
 }
 
 interface RootDispatch{
-    getProductById
-    addProductToCart
+    getProductById: (id: string) => void,
+    addProductToCart: (userId: string, item: CartItemDto) => void
 }
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & RootDispatch;
 
-const ProductDetails:React.FC<Props> = ({loading, user, productById}:Props) => {
+const ProductDetails:React.FC<Props> = ({loading, user, addProductToCart, getProductById, productById}:Props) => {
     const [amount, setAmount] = useState<number>(1)
     const [selectedColor, setColor] = useState<Colors | null>(productById ? productById.colors[0] : null)
     const [selectedSize, setSize] = useState<Sizes | null>(productById ? productById.sizes[0] : null)
+
+    useEffect(() => {
+        getProductById(productById._id)
+    }, [getProductById])
 
     const onAddToCart = () => {
         const item: CartItemDto = {
@@ -41,7 +46,7 @@ const ProductDetails:React.FC<Props> = ({loading, user, productById}:Props) => {
         }
 
         if (user) {
-            // addProductToCart(item);
+            addProductToCart(user._id, item);
         } else {
             const cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')!) : []
             cart.push(item)
@@ -99,8 +104,8 @@ const mapStateToProps = (state: RootState) => ({
 });
 
 const mapDispatchToProps:RootDispatch = ({
-    getProductById: () => {},
-    addProductToCart: () => {}
+    getProductById: getProductDetailsRequest,
+    addProductToCart: addProductToCartRequest
 });
 
 const connector = connect(

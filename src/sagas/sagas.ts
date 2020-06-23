@@ -3,7 +3,7 @@ import {ActionTypeWithStringPayload, ActionTypeWithProductDto, ActionTypeWithUpd
 import {
     getProductsResponse, createProductSuccess, updateProductSuccess, deleteProductSuccess,
     fetchCategoriesResponse, createUserResponse, loginUserResponse, addProductToCartResponse,
-    deleteProductFromCartResponse
+    deleteProductFromCartResponse, getProductDetailsResponse
 } from '../actions/actions';          
 import { actionTypes } from '../consts/actions';
 import Endpoints from '../consts/endpoints';
@@ -219,6 +219,20 @@ function* deleteItemFromCart(action: ActionTypeWithAny){
     }
 }
 
+function* getProductDetails(action: ActionTypeWithAny){
+    try {
+        const response = yield call(async () => await fetch(Endpoints.Product.getById(action.payload.id)));
+        const parsed = yield call(async () => await response.json());
+        if (!parsed.message) {
+            yield put(getProductDetailsResponse(parsed));
+        } else {
+            yield put(getProductDetailsResponse(parsed));
+        }
+    } catch(e) {
+        console.log(e)
+    }
+}
+
 function* responseFetchSearch(){
     yield takeLatest(actionTypes.FETCH_PRODUCTS, fetchProducts)
 }
@@ -255,6 +269,11 @@ function* requestDeleteItemFromCart(){
     yield takeLatest(actionTypes.DELETE_ITEM_FROM_CART, deleteItemFromCart)
 }
 
+function* requestFetchProductDetails(){
+    yield takeLatest(actionTypes.FETCH_PRODUCT_DETAILS, getProductDetails)
+}
+
+
 export default function* rootSaga(){
     yield all([
         responseFetchSearch(),
@@ -265,6 +284,7 @@ export default function* rootSaga(){
         requestCreateUser(),
         requestLoginUser(),
         requestAddItemToCart(),
-        requestDeleteItemFromCart()
+        requestDeleteItemFromCart(),
+        requestFetchProductDetails()
     ])
 }

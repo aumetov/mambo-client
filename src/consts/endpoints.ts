@@ -5,6 +5,7 @@ const base = (rest: string) => `${configuration.remoteApi}/${rest}/`;
 export default class Endpoints {
     static Product = class {
         static getAll = base('product');
+        static getById = (productId: string) => base(`product/${productId}`)
     }
 
     static Categories = class {
