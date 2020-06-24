@@ -61,7 +61,7 @@ export interface PriceRange {
 }
 
 export interface SearchFilter {
-    category?: string;
+    category?: string | string[];
     sexes?: Gender[];
     sizes?: Sizes[];
     colors?: Colors[];

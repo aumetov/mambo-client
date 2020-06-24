@@ -6,6 +6,7 @@ import { ProductDto, CartItemDto } from '../../types/types';
 import { Colors } from '../../consts/colors';
 import { Sizes } from '../../consts/sizes';
 import { addProductToCartRequest, getProductDetailsRequest } from '../../actions/actions';
+import RecommendedProducts from '../../components/recommended-products/recommended-products';
 
 const addToBagIcon = require('../../shared/icons/add-to-bag.png');
 const addToWishList = require('../../shared/icons/add-to-wishlist.png');
@@ -30,7 +31,9 @@ const ProductDetails:React.FC<Props> = ({loading, user, addProductToCart, getPro
     const [selectedSize, setSize] = useState<Sizes | null>(productById ? productById.sizes[0] : null)
 
     useEffect(() => {
-        getProductById(productById._id)
+        if (productById) {
+            getProductById(productById._id)
+        }
     }, [getProductById])
 
     const onAddToCart = () => {
@@ -52,31 +55,32 @@ const ProductDetails:React.FC<Props> = ({loading, user, addProductToCart, getPro
             cart.push(item)
             localStorage.setItem('cart', JSON.stringify(cart))
         }
-        
     }
+
     return (
         <div className='product-details-container'>
+            <div className="product-info-container">
             <ProductGallery/>
             <div className='product-info'>
-                <h3 className='product-info-title'>{productById.title}</h3>
-                <p className='product-info-shop'>{productById.shopId}</p>
+                <h3 className='product-info-title'>{productById?.title}</h3>
+                <p className='product-info-shop'>{productById?.shopId}</p>
 
                 <div className='size-selection'>
                     <p className='selection-title'>Размер</p>
                     <div className='sizes-container'>
-                        {productById.sizes.map(size => <div className='size-option' onClick={() => setSize(size)}>{Sizes[size]}</div>)}
+                        {productById && productById.sizes.map(size => <div className='size-option' onClick={() => setSize(size)}>{Sizes[size]}</div>)}
                     </div>
                 </div>
 
                 <div className='color-selection'>
                     <p className='selection-title'>Цвет</p>
                     <div className='colors-container'>
-                        {productById.colors.map(color => <div className='color-option' onClick={() => setColor(color)}>{Colors[color]}</div>)}
+                        {productById && productById.colors.map(color => <div className='color-option' onClick={() => setColor(color)}>{Colors[color]}</div>)}
                     </div>
                 </div>
 
-                <p className='product-price'>{productById.price} c</p>
-                {productById.salePrice && <p className='product-sale-price'>{productById.salePrice} c</p>}
+                <p className='product-price'>{productById?.price} c</p>
+                {productById && productById.salePrice && <p className='product-sale-price'>{productById.salePrice} c</p>}
 
                 <div className='product-action-buttons'>
                     <button className='add-to-cart-button' onClick={onAddToCart}>
@@ -91,8 +95,10 @@ const ProductDetails:React.FC<Props> = ({loading, user, addProductToCart, getPro
                 </div>
 
                 <p className='description-title'>Описание</p>
-                <p>{productById.description}</p>
+                <p>{productById?.description}</p>
             </div>
+            </div>
+            <RecommendedProducts/>
         </div>
     )
 }

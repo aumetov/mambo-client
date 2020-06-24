@@ -1,0 +1,8 @@
+.recommended-products-container {
+    display: flex;
+    overflow-y: auto;
+
+    .product-card-container {
+        margin-right: 20px;
+    }
+}
