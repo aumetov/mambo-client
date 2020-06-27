@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { connect, ConnectedProps } from "react-redux";
 import './cart-checkout.scss'
 import CartProductsTable from '../../components/cart-products-table/cart-products-table'
+import { TextField } from '@material-ui/core';
 
 interface RootState{
     loading: boolean,
@@ -15,12 +16,15 @@ type PropsFromRedux = ConnectedProps<typeof connector>;
 type Props = PropsFromRedux & RootDispatch;
 
 const CartCheckout:React.FC<Props> = ({loading, user}:Props) => {
+    const [promocode, setPromocode] = useState<string>('')
+
     return (
         <div className='cart-checkout-container'>
             <div className='cart-products-info-list'>
                 <h3 className='cart-checkout-title'>Корзина</h3>
                 <CartProductsTable/>
                 <div className='price-info-container'>
+                    <TextField value={promocode} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPromocode(e.target.value)}/>
                     <div className='subtotal-price-container'>
                         <p className='subtotal-title'>Subtotal:</p>
                         <p className='subtotal-price'>4500 c</p>
@@ -39,7 +43,7 @@ const CartCheckout:React.FC<Props> = ({loading, user}:Props) => {
             </div>
 
             <div className='payment-info-container'>
-
+                
             </div>
         </div>
     )

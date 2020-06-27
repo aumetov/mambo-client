@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import './cart-products-table.scss';
 import { connect, ConnectedProps } from "react-redux";
 import { deleteProductFromCartRequest } from '../../actions/actions';
 import Table from '@material-ui/core/Table';
@@ -32,16 +33,26 @@ const CartProductsTable:React.FC<Props> = ({loading, user, deleteItemFromCart}:P
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {user.cart.map((row) => {
+                    {[1,2].map((row) => {
                     return (
                         <TableRow hover tabIndex={-1} key={row}>
-                        {user.cart.map((item) => {
-                            return (
                             <TableCell>
-                                <img className='delete-item-icon' src={deleteIcon} alt="delete-cart-item" onClick={() => deleteItemFromCart(user._id, item.productId)}/>
+                                <img className='cart-item-photo' src={deleteIcon} alt="delete-cart-item" onClick={() => deleteItemFromCart(user._id, '')}/>
                             </TableCell>
-                            );
-                        })}
+                            <TableCell>
+                                <p>Product Title</p>
+                                <p>Brand Name</p>
+                            </TableCell>
+                            <TableCell>
+                                <p>Size Info</p>
+                                <p>Color Info</p>
+                            </TableCell>
+                            <TableCell>
+                                <p>amount</p>
+                            </TableCell>
+                            <TableCell>
+                                <p>1500 c</p>
+                            </TableCell>
                         </TableRow>
                     );
                     })}
