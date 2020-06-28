@@ -20,6 +20,24 @@ export interface ProductDto {
     productThumbnail: string;
 }
 
+export interface ProductDetailsDto {
+    _id: string;
+    title: string;
+    categories: any[];
+    status: string;
+    price: number;
+    salePrice: number;
+    colors: Colors[];
+    sizes: Sizes[];
+    description: string;
+    collection: string;
+    productImages: string[];
+    sex: Gender;
+    shopId: string;
+    productCode: string;
+    productThumbnail: string;
+}
+
 export interface CreateProductDto {
     title: string;
     categories: any[];
